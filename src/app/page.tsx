@@ -1,0 +1,304 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { Settings } from "lucide-react";
+
+// MapLibre GL JS and CSS import
+import "maplibre-gl/dist/maplibre-gl.css";
+import maplibregl from "maplibre-gl";
+
+function getInitialView() {
+  if (typeof window === "undefined") return { lng: 2.3522, lat: 48.8566, zoom: 10 };
+  const params = new URLSearchParams(window.location.search);
+  const lng = parseFloat(params.get("lng") || "2.3522");
+  const lat = parseFloat(params.get("lat") || "48.8566");
+  const zoom = parseFloat(params.get("zoom") || "10");
+  return { lng, lat, zoom };
+}
+
+export default function Home() {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  // Add toggles for hiding damaged/destroyed invaders
+  const [hideDamaged, setHideDamaged] = useState(false);
+  const [hideDestroyed, setHideDestroyed] = useState(false);
+
+  // Store map instance and source for updates
+  const mapRef = useRef<maplibregl.Map | null>(null);
+  const geojsonRef = useRef<
+    GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>[]
+  >([]);
+
+  useEffect(() => {
+    if (!mapContainer.current) return;
+
+    const initialView = getInitialView();
+
+    const map = new maplibregl.Map({
+      container: mapContainer.current,
+      style: "https://api.maptiler.com/maps/streets-v2/style.json?key=PreVrbZPGhZ59CUDc1lK",
+      center: [initialView.lng, initialView.lat],
+      zoom: initialView.zoom,
+    });
+    mapRef.current = map;
+
+    // Update URL on moveend
+    map.on("moveend", () => {
+      const center = map.getCenter();
+      const zoom = map.getZoom();
+      const params = new URLSearchParams(window.location.search);
+      params.set("lng", center.lng.toFixed(5));
+      params.set("lat", center.lat.toFixed(5));
+      params.set("zoom", zoom.toFixed(2));
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params.toString()}`
+      );
+    });
+
+    fetch("https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json")
+      .then((res) => res.json())
+      .then((data) => {
+        // Define Invader type
+        type Invader = {
+          id: string;
+          status: string;
+          instagramUrl?: string;
+          obf_lat: number;
+          obf_lng: number;
+        };
+
+        // Save original geojson for filtering
+        geojsonRef.current = (data as Invader[])
+          .filter(
+            (invader: Invader) =>
+              invader.obf_lat &&
+              invader.obf_lng &&
+              invader.status !== "hidden"
+          )
+          .map((invader: Invader) => ({
+            type: "Feature",
+            properties: {
+              id: invader.id,
+              status: invader.status,
+              instagramUrl: invader.instagramUrl,
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [invader.obf_lng, invader.obf_lat],
+            },
+          }));
+
+        const makeGeoJSON = (): GeoJSON.FeatureCollection<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }> => ({
+          type: "FeatureCollection" as const,
+          features: geojsonRef.current
+            .filter((feature: GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>) => {
+              if (hideDamaged && feature.properties.status === "damaged") return false;
+              if (hideDestroyed && feature.properties.status === "destroyed") return false;
+              return true;
+            }),
+        });
+
+        map.on("load", () => {
+          map.addSource("invaders", {
+            type: "geojson",
+            data: makeGeoJSON(),
+            cluster: true,
+            clusterMaxZoom: 12,
+            clusterRadius: 30,
+          });
+
+          // Cluster circles
+          map.addLayer({
+            id: "clusters",
+            type: "circle",
+            source: "invaders",
+            filter: ["has", "point_count"],
+            paint: {
+              "circle-color": "#51bbd6",
+              "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                20, 100, 30, 750, 40
+              ],
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#fff",
+            },
+          });
+
+          // Cluster count labels
+          map.addLayer({
+            id: "cluster-count",
+            type: "symbol",
+            source: "invaders",
+            filter: ["has", "point_count"],
+            layout: {
+              "text-field": "{point_count_abbreviated}",
+              "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+              "text-size": 14,
+            },
+            paint: {
+              "text-color": "#fff",
+            },
+          });
+
+          // Individual invader markers with color by status
+          map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "invaders",
+            filter: ["!", ["has", "point_count"]],
+            paint: {
+              "circle-color": [
+                "match",
+                ["get", "status"],
+                "OK", "#2ecc40",         // green
+                "damaged", "#ffe066",    // yellow
+                "destroyed", "#ff4136",  // red
+                "#cccccc"                // fallback
+              ],
+              "circle-radius": 10, // increased from 8 for bigger hitbox
+              "circle-stroke-width": 1,
+              "circle-stroke-color": "#fff",
+            },
+          });
+
+          // Popup on click
+          map.on("click", "unclustered-point", (e) => {
+            if (!e.features || e.features.length === 0) return;
+            const geometry = e.features[0].geometry as GeoJSON.Point;
+            const coordinates = geometry.coordinates.slice() as [number, number];
+            const { id, instagramUrl } = e.features[0].properties;
+            const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
+            // Remove _ and trailing numbers for fallback
+            const fallbackId = id.replace(/_\d+$/, "");
+            const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
+
+            const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
+            new maplibregl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(
+                `<div style="text-align:center;">
+                  <div style="font-weight:bold; color:#000;">${id}</div>
+                  <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
+                    onerror="this.onerror=null;this.src='${fallbackUrl}';"
+                  />
+                  ${instagramUrl ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>` : ""}
+                </div>`
+              )
+              .addTo(map);
+          });
+
+          // Zoom into cluster on click
+          map.on("click", "clusters", async (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+              layers: ["clusters"],
+            });
+            const clusterId = features[0].properties.cluster_id;
+            const source = map.getSource("invaders") as maplibregl.GeoJSONSource;
+            // Use Promise-based API
+            const zoom = await source.getClusterExpansionZoom(clusterId);
+            // Typecast geometry to Point to access coordinates
+            const coordinates = (features[0].geometry as GeoJSON.Point).coordinates as [number, number];
+            map.easeTo({
+              center: coordinates,
+              zoom,
+            });
+          });
+
+          // Change cursor on hover
+          map.on("mouseenter", "clusters", () => {
+            map.getCanvas().style.cursor = "pointer";
+          });
+          map.on("mouseleave", "clusters", () => {
+            map.getCanvas().style.cursor = "";
+          });
+        });
+      });
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  // Only run once on mount
+  }, [hideDamaged, hideDestroyed]);
+
+  // Update invaders source when toggles change
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const source = map.getSource("invaders") as maplibregl.GeoJSONSource;
+    if (!source || !geojsonRef.current) return;
+    const filteredGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }> = {
+      type: "FeatureCollection",
+      features: geojsonRef.current
+        .filter((feature: GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>) => {
+          if (hideDamaged && feature.properties.status === "damaged") return false;
+          if (hideDestroyed && feature.properties.status === "destroyed") return false;
+          return true;
+        }),
+    };
+    source.setData(filteredGeoJSON);
+  }, [hideDamaged, hideDestroyed]);
+
+  return (
+    <>
+      {/* Add viewport meta tag for mobile responsiveness */}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          width: "100vw",
+          height: "100vh",
+          overflow: "hidden",
+          touchAction: "none",
+        }}
+      >
+        <div
+          ref={mapContainer}
+          style={{
+            width: "100%",
+            height: "100%",
+            touchAction: "none",
+          }}
+        />
+      </div>
+      {/* Settings menu button and panel */}
+      <div className="fixed top-4 right-4 z-10">
+        <button
+          onClick={() => setSettingsOpen((open) => !open)}
+          className="bg-white border border-gray-300 rounded-lg px-4 py-2 cursor-pointer font-bold shadow flex items-center gap-2 text-black hover:bg-gray-50 transition"
+        >
+          <Settings size={20} />
+          {settingsOpen ? "Close" : null}
+        </button>
+        {settingsOpen && (
+          <div className="mt-2 bg-white border border-gray-300 rounded-xl p-4 min-w-[220px] shadow-lg text-black">
+            <div className="font-bold mb-2">Settings</div>
+            <label className="block mb-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={hideDamaged}
+                onChange={e => setHideDamaged(e.target.checked)}
+                className="mr-2 accent-yellow-400"
+              />
+              Hide Damaged Invaders
+            </label>
+            <label className="block mb-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={hideDestroyed}
+                onChange={e => setHideDestroyed(e.target.checked)}
+                className="mr-2 accent-red-400"
+              />
+              Hide Destroyed Invaders
+            </label>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
