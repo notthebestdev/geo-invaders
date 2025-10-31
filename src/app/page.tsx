@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Settings } from "lucide-react";
-
-// MapLibre GL JS and CSS import
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
@@ -18,7 +16,6 @@ function getInitialView() {
 export default function Home() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  // Add toggles for hiding damaged/destroyed invaders
   const [hideDamaged, setHideDamaged] = useState(false);
   const [hideDestroyed, setHideDestroyed] = useState(false);
 
@@ -59,7 +56,6 @@ export default function Home() {
     fetch("https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json")
       .then((res) => res.json())
       .then((data) => {
-        // Define Invader type
         type Invader = {
           id: string;
           status: string;
@@ -68,7 +64,6 @@ export default function Home() {
           obf_lng: number;
         };
 
-        // Save original geojson for filtering
         geojsonRef.current = (data as Invader[])
           .filter(
             (invader: Invader) =>
@@ -141,8 +136,8 @@ export default function Home() {
               "text-color": "#fff",
             },
           });
-
-          // Individual invader markers with color by status
+          
+          // Unclustered points
           map.addLayer({
             id: "unclustered-point",
             type: "circle",
@@ -157,7 +152,7 @@ export default function Home() {
                 "destroyed", "#ff4136",  // red
                 "#cccccc"                // fallback
               ],
-              "circle-radius": 10, // increased from 8 for bigger hitbox
+              "circle-radius": 10,
               "circle-stroke-width": 1,
               "circle-stroke-color": "#fff",
             },
@@ -170,7 +165,6 @@ export default function Home() {
             const coordinates = geometry.coordinates.slice() as [number, number];
             const { id, instagramUrl } = e.features[0].properties;
             const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
-            // Remove _ and trailing numbers for fallback
             const fallbackId = id.replace(/_\d+$/, "");
             const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
 
@@ -196,7 +190,6 @@ export default function Home() {
             });
             const clusterId = features[0].properties.cluster_id;
             const source = map.getSource("invaders") as maplibregl.GeoJSONSource;
-            // Use Promise-based API
             const zoom = await source.getClusterExpansionZoom(clusterId);
             // Typecast geometry to Point to access coordinates
             const coordinates = (features[0].geometry as GeoJSON.Point).coordinates as [number, number];
@@ -220,7 +213,6 @@ export default function Home() {
       map.remove();
       mapRef.current = null;
     };
-  // Only run once on mount
   }, [hideDamaged, hideDestroyed]);
 
   // Update invaders source when toggles change
@@ -243,7 +235,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Add viewport meta tag for mobile responsiveness */}
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
