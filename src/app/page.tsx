@@ -35,7 +35,7 @@ export default function Home() {
 
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      style: "https://api.maptiler.com/maps/streets-v2/style.json?key=PreVrbZPGhZ59CUDc1lK",
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}`,
       center: [initialView.lng, initialView.lat],
       zoom: initialView.zoom,
     });
