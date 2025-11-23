@@ -5,11 +5,16 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 
 function getInitialView() {
-  if (typeof window === "undefined") return { lng: 2.3522, lat: 48.8566, zoom: 10 };
+  if (typeof window === "undefined")
+    return { lng: 2.3522, lat: 48.8566, zoom: 10 };
   const params = new URLSearchParams(window.location.search);
   const lng = parseFloat(params.get("lng") || "2.3522");
   const lat = parseFloat(params.get("lat") || "48.8566");
@@ -25,7 +30,10 @@ export default function Home() {
   // Store map instance and source for updates
   const mapRef = useRef<maplibregl.Map | null>(null);
   const geojsonRef = useRef<
-    GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>[]
+    GeoJSON.Feature<
+      GeoJSON.Point,
+      { id: string; status: string; instagramUrl?: string }
+    >[]
   >([]);
 
   useEffect(() => {
@@ -52,11 +60,13 @@ export default function Home() {
       window.history.replaceState(
         {},
         "",
-        `${window.location.pathname}?${params.toString()}`
+        `${window.location.pathname}?${params.toString()}`,
       );
     });
 
-    fetch("https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json")
+    fetch(
+      "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json",
+    )
       .then((res) => res.json())
       .then((data) => {
         type Invader = {
@@ -70,9 +80,7 @@ export default function Home() {
         geojsonRef.current = (data as Invader[])
           .filter(
             (invader: Invader) =>
-              invader.obf_lat &&
-              invader.obf_lng &&
-              invader.status !== "hidden"
+              invader.obf_lat && invader.obf_lng && invader.status !== "hidden",
           )
           .map((invader: Invader) => ({
             type: "Feature",
@@ -87,14 +95,25 @@ export default function Home() {
             },
           }));
 
-        const makeGeoJSON = (): GeoJSON.FeatureCollection<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }> => ({
+        const makeGeoJSON = (): GeoJSON.FeatureCollection<
+          GeoJSON.Point,
+          { id: string; status: string; instagramUrl?: string }
+        > => ({
           type: "FeatureCollection" as const,
-          features: geojsonRef.current
-            .filter((feature: GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>) => {
-              if (hideDamaged && feature.properties.status === "damaged") return false;
-              if (hideDestroyed && feature.properties.status === "destroyed") return false;
+          features: geojsonRef.current.filter(
+            (
+              feature: GeoJSON.Feature<
+                GeoJSON.Point,
+                { id: string; status: string; instagramUrl?: string }
+              >,
+            ) => {
+              if (hideDamaged && feature.properties.status === "damaged")
+                return false;
+              if (hideDestroyed && feature.properties.status === "destroyed")
+                return false;
               return true;
-            }),
+            },
+          ),
         });
 
         map.on("load", () => {
@@ -117,7 +136,11 @@ export default function Home() {
               "circle-radius": [
                 "step",
                 ["get", "point_count"],
-                20, 100, 30, 750, 40
+                20,
+                100,
+                30,
+                750,
+                40,
               ],
               "circle-stroke-width": 2,
               "circle-stroke-color": "#fff",
@@ -139,7 +162,7 @@ export default function Home() {
               "text-color": "#fff",
             },
           });
-          
+
           // Unclustered points
           map.addLayer({
             id: "unclustered-point",
@@ -150,10 +173,13 @@ export default function Home() {
               "circle-color": [
                 "match",
                 ["get", "status"],
-                "OK", "#2ecc40",         // green
-                "damaged", "#ffe066",    // yellow
-                "destroyed", "#ff4136",  // red
-                "#cccccc"                // fallback
+                "OK",
+                "#2ecc40", // green
+                "damaged",
+                "#ffe066", // yellow
+                "destroyed",
+                "#ff4136", // red
+                "#cccccc", // fallback
               ],
               "circle-radius": 10,
               "circle-stroke-width": 1,
@@ -165,7 +191,10 @@ export default function Home() {
           map.on("click", "unclustered-point", (e) => {
             if (!e.features || e.features.length === 0) return;
             const geometry = e.features[0].geometry as GeoJSON.Point;
-            const coordinates = geometry.coordinates.slice() as [number, number];
+            const coordinates = geometry.coordinates.slice() as [
+              number,
+              number,
+            ];
             const { id, instagramUrl } = e.features[0].properties;
             const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
             const fallbackId = id.replace(/_\d+$/, "");
@@ -180,8 +209,12 @@ export default function Home() {
                   <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
                     onerror="this.onerror=null;this.src='${fallbackUrl}';"
                   />
-                  ${instagramUrl ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>` : ""}
-                </div>`
+                  ${
+                    instagramUrl
+                      ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
+                      : ""
+                  }
+                </div>`,
               )
               .addTo(map);
           });
@@ -192,10 +225,13 @@ export default function Home() {
               layers: ["clusters"],
             });
             const clusterId = features[0].properties.cluster_id;
-            const source = map.getSource("invaders") as maplibregl.GeoJSONSource;
+            const source = map.getSource(
+              "invaders",
+            ) as maplibregl.GeoJSONSource;
             const zoom = await source.getClusterExpansionZoom(clusterId);
             // Typecast geometry to Point to access coordinates
-            const coordinates = (features[0].geometry as GeoJSON.Point).coordinates as [number, number];
+            const coordinates = (features[0].geometry as GeoJSON.Point)
+              .coordinates as [number, number];
             map.easeTo({
               center: coordinates,
               zoom,
@@ -224,14 +260,25 @@ export default function Home() {
     if (!map) return;
     const source = map.getSource("invaders") as maplibregl.GeoJSONSource;
     if (!source || !geojsonRef.current) return;
-    const filteredGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }> = {
+    const filteredGeoJSON: GeoJSON.FeatureCollection<
+      GeoJSON.Point,
+      { id: string; status: string; instagramUrl?: string }
+    > = {
       type: "FeatureCollection",
-      features: geojsonRef.current
-        .filter((feature: GeoJSON.Feature<GeoJSON.Point, { id: string; status: string; instagramUrl?: string }>) => {
-          if (hideDamaged && feature.properties.status === "damaged") return false;
-          if (hideDestroyed && feature.properties.status === "destroyed") return false;
+      features: geojsonRef.current.filter(
+        (
+          feature: GeoJSON.Feature<
+            GeoJSON.Point,
+            { id: string; status: string; instagramUrl?: string }
+          >,
+        ) => {
+          if (hideDamaged && feature.properties.status === "damaged")
+            return false;
+          if (hideDestroyed && feature.properties.status === "destroyed")
+            return false;
           return true;
-        }),
+        },
+      ),
     };
     source.setData(filteredGeoJSON);
   }, [hideDamaged, hideDestroyed]);
@@ -265,7 +312,11 @@ export default function Home() {
       <div className="fixed top-4 right-4 z-50">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
               <Settings size={18} />
               <span className="sr-only">Open settings</span>
             </Button>
@@ -274,7 +325,9 @@ export default function Home() {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <div className="text-sm font-medium">Settings</div>
-                <div className="text-xs text-muted-foreground">Filter invaders on the map</div>
+                <div className="text-xs text-muted-foreground">
+                  Filter invaders on the map
+                </div>
               </div>
             </div>
 
