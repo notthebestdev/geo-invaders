@@ -332,21 +332,33 @@ export default function Home() {
             </div>
 
             <div className="space-y-3">
-              <label className="flex items-center justify-between cursor-pointer">
-                <div className="text-sm">Hide Damaged Invaders</div>
-                <Switch
-                  checked={hideDamaged}
-                  onCheckedChange={(v) => setHideDamaged(Boolean(v))}
-                />
-              </label>
+              <div>
+                <label className="flex items-center justify-between cursor-pointer">
+                  <div className="text-sm">Hide Damaged Invaders</div>
+                  <Switch
+                    checked={hideDamaged}
+                    onCheckedChange={(v) => setHideDamaged(Boolean(v))}
+                  />
+                </label>
+                <div className="text-xs text-muted-foreground mt-1">
+                  Removes invaders marked as "damaged" from the map to reduce
+                  visual clutter while keeping intact ones visible.
+                </div>
+              </div>
 
-              <label className="flex items-center justify-between cursor-pointer">
-                <div className="text-sm">Hide Destroyed Invaders</div>
-                <Switch
-                  checked={hideDestroyed}
-                  onCheckedChange={(v) => setHideDestroyed(Boolean(v))}
-                />
-              </label>
+              <div>
+                <label className="flex items-center justify-between cursor-pointer">
+                  <div className="text-sm">Hide Destroyed Invaders</div>
+                  <Switch
+                    checked={hideDestroyed}
+                    onCheckedChange={(v) => setHideDestroyed(Boolean(v))}
+                  />
+                </label>
+                <div className="text-xs text-muted-foreground mt-1">
+                  Hides invaders that are recorded as "destroyed" so you can
+                  focus on current, intact pieces.
+                </div>
+              </div>
             </div>
           </PopoverContent>
         </Popover>
