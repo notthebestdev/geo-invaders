@@ -4,6 +4,10 @@ import { Settings } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
+
 function getInitialView() {
   if (typeof window === "undefined") return { lng: 2.3522, lat: 48.8566, zoom: 10 };
   const params = new URLSearchParams(window.location.search);
@@ -15,7 +19,6 @@ function getInitialView() {
 
 export default function Home() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [hideDamaged, setHideDamaged] = useState(false);
   const [hideDestroyed, setHideDestroyed] = useState(false);
 
@@ -257,38 +260,43 @@ export default function Home() {
           }}
         />
       </div>
-      {/* Settings menu button and panel */}
-      <div className="fixed top-4 right-4 z-10">
-        <button
-          onClick={() => setSettingsOpen((open) => !open)}
-          className="bg-white border border-gray-300 rounded-lg px-4 py-2 cursor-pointer font-bold shadow flex items-center gap-2 text-black hover:bg-gray-50 transition"
-        >
-          <Settings size={20} />
-          {settingsOpen ? "Close" : null}
-        </button>
-        {settingsOpen && (
-          <div className="mt-2 bg-white border border-gray-300 rounded-xl p-4 min-w-[220px] shadow-lg text-black">
-            <div className="font-bold mb-2">Settings</div>
-            <label className="block mb-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={hideDamaged}
-                onChange={e => setHideDamaged(e.target.checked)}
-                className="mr-2 accent-yellow-400"
-              />
-              Hide Damaged Invaders
-            </label>
-            <label className="block mb-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={hideDestroyed}
-                onChange={e => setHideDestroyed(e.target.checked)}
-                className="mr-2 accent-red-400"
-              />
-              Hide Destroyed Invaders
-            </label>
-          </div>
-        )}
+
+      {/* Settings menu using shadcn Popover */}
+      <div className="fixed top-4 right-4 z-50">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Settings size={18} />
+              <span className="sr-only">Open settings</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent side="bottom" align="end" className="w-[260px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <div className="text-sm font-medium">Settings</div>
+                <div className="text-xs text-muted-foreground">Filter invaders on the map</div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <label className="flex items-center justify-between cursor-pointer">
+                <div className="text-sm">Hide Damaged Invaders</div>
+                <Switch
+                  checked={hideDamaged}
+                  onCheckedChange={(v) => setHideDamaged(Boolean(v))}
+                />
+              </label>
+
+              <label className="flex items-center justify-between cursor-pointer">
+                <div className="text-sm">Hide Destroyed Invaders</div>
+                <Switch
+                  checked={hideDestroyed}
+                  onCheckedChange={(v) => setHideDestroyed(Boolean(v))}
+                />
+              </label>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </>
   );
