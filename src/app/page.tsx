@@ -12,6 +12,17 @@ import {
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 
+// Added imports for the command/search palette
+import { Search } from "lucide-react";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
 function getInitialView() {
   if (typeof window === "undefined")
     return { lng: 2.3522, lat: 48.8566, zoom: 10 };
@@ -35,6 +46,58 @@ export default function Home() {
       { id: string; status: string; instagramUrl?: string }
     >[]
   >([]);
+
+  // New: state for command dialog and input
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [cmdQuery, setCmdQuery] = useState("");
+
+  // New: keyboard shortcut to toggle command dialog (Cmd/Ctrl+J)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setCmdOpen((o) => !o);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Helper to open popup + center map for a given feature
+  const openFeatureOnMap = (feature: GeoJSON.Feature<
+    GeoJSON.Point,
+    { id: string; status: string; instagramUrl?: string }
+  >) => {
+    const map = mapRef.current;
+    if (!map) return;
+    const coords = feature.geometry.coordinates as [number, number];
+    const { id, instagramUrl } = feature.properties;
+    const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
+    const fallbackId = id.replace(/_\d+$/, "");
+    const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
+    const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
+
+    // center & zoom
+    map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 14) });
+
+    // show popup
+    new maplibregl.Popup()
+      .setLngLat(coords)
+      .setHTML(
+        `<div style="text-align:center;">
+          <div style="font-weight:bold; color:#000;">${id}</div>
+          <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
+            onerror="this.onerror=null;this.src='${fallbackUrl}';"
+          />
+          ${
+            instagramUrl
+              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
+              : ""
+          }
+        </div>`,
+      )
+      .addTo(map);
+  };
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -307,7 +370,7 @@ export default function Home() {
           }}
         />
       </div>
-
+      
       {/* Settings menu using shadcn Popover */}
       <div className="fixed top-4 right-4 z-50">
         <Popover>
@@ -363,6 +426,40 @@ export default function Home() {
           </PopoverContent>
         </Popover>
       </div>
+
+      {/* Command / Search dialog (hidden shortcut: Cmd/Ctrl+J) */}
+      <CommandDialog open={cmdOpen} onOpenChange={setCmdOpen}>
+        <CommandInput
+          placeholder="Search invaders by id..."
+          value={cmdQuery}
+          onValueChange={(v: string) => setCmdQuery(v)}
+        />
+        <CommandList>
+          <CommandEmpty>No invaders found.</CommandEmpty>
+          <CommandGroup heading="Invaders">
+            {geojsonRef.current
+              .filter((f) =>
+                f.properties.id
+                  .toLowerCase()
+                  .includes(cmdQuery.trim().toLowerCase()),
+              )
+              .slice(0, 50) // limit results
+              .map((f) => (
+                <CommandItem
+                  key={f.properties.id}
+                  onSelect={() => {
+                    openFeatureOnMap(f);
+                    setCmdOpen(false);
+                    setCmdQuery("");
+                  }}
+                >
+                  <Search className="mr-2" />
+                  <span>{f.properties.id}</span>
+                </CommandItem>
+              ))}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
     </>
   );
 }
