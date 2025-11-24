@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 
-// Added imports for the command/search palette
 import { Search } from "lucide-react";
 import {
   CommandDialog,
@@ -47,11 +46,9 @@ export default function Home() {
     >[]
   >([]);
 
-  // New: state for command dialog and input
   const [cmdOpen, setCmdOpen] = useState(false);
   const [cmdQuery, setCmdQuery] = useState("");
 
-  // New: keyboard shortcut to toggle command dialog (Cmd/Ctrl+J)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
@@ -63,11 +60,12 @@ export default function Home() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  // Helper to open popup + center map for a given feature
-  const openFeatureOnMap = (feature: GeoJSON.Feature<
-    GeoJSON.Point,
-    { id: string; status: string; instagramUrl?: string }
-  >) => {
+  const openFeatureOnMap = (
+    feature: GeoJSON.Feature<
+      GeoJSON.Point,
+      { id: string; status: string; instagramUrl?: string }
+    >
+  ) => {
     const map = mapRef.current;
     if (!map) return;
     const coords = feature.geometry.coordinates as [number, number];
@@ -94,7 +92,7 @@ export default function Home() {
               ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
               : ""
           }
-        </div>`,
+        </div>`
       )
       .addTo(map);
   };
@@ -123,12 +121,12 @@ export default function Home() {
       window.history.replaceState(
         {},
         "",
-        `${window.location.pathname}?${params.toString()}`,
+        `${window.location.pathname}?${params.toString()}`
       );
     });
 
     fetch(
-      "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json",
+      "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -143,7 +141,7 @@ export default function Home() {
         geojsonRef.current = (data as Invader[])
           .filter(
             (invader: Invader) =>
-              invader.obf_lat && invader.obf_lng && invader.status !== "hidden",
+              invader.obf_lat && invader.obf_lng && invader.status !== "hidden"
           )
           .map((invader: Invader) => ({
             type: "Feature",
@@ -168,14 +166,14 @@ export default function Home() {
               feature: GeoJSON.Feature<
                 GeoJSON.Point,
                 { id: string; status: string; instagramUrl?: string }
-              >,
+              >
             ) => {
               if (hideDamaged && feature.properties.status === "damaged")
                 return false;
               if (hideDestroyed && feature.properties.status === "destroyed")
                 return false;
               return true;
-            },
+            }
           ),
         });
 
@@ -277,7 +275,7 @@ export default function Home() {
                       ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
                       : ""
                   }
-                </div>`,
+                </div>`
               )
               .addTo(map);
           });
@@ -289,7 +287,7 @@ export default function Home() {
             });
             const clusterId = features[0].properties.cluster_id;
             const source = map.getSource(
-              "invaders",
+              "invaders"
             ) as maplibregl.GeoJSONSource;
             const zoom = await source.getClusterExpansionZoom(clusterId);
             // Typecast geometry to Point to access coordinates
@@ -333,14 +331,14 @@ export default function Home() {
           feature: GeoJSON.Feature<
             GeoJSON.Point,
             { id: string; status: string; instagramUrl?: string }
-          >,
+          >
         ) => {
           if (hideDamaged && feature.properties.status === "damaged")
             return false;
           if (hideDestroyed && feature.properties.status === "destroyed")
             return false;
           return true;
-        },
+        }
       ),
     };
     source.setData(filteredGeoJSON);
@@ -370,7 +368,7 @@ export default function Home() {
           }}
         />
       </div>
-      
+
       {/* Settings menu using shadcn Popover */}
       <div className="fixed top-4 right-4 z-50">
         <Popover>
@@ -427,7 +425,7 @@ export default function Home() {
         </Popover>
       </div>
 
-      {/* Command / Search dialog (hidden shortcut: Cmd/Ctrl+J) */}
+      {/* Command Palette for searching invaders */}
       <CommandDialog open={cmdOpen} onOpenChange={setCmdOpen}>
         <CommandInput
           placeholder="Search invaders by id..."
@@ -441,7 +439,7 @@ export default function Home() {
               .filter((f) =>
                 f.properties.id
                   .toLowerCase()
-                  .includes(cmdQuery.trim().toLowerCase()),
+                  .includes(cmdQuery.trim().toLowerCase())
               )
               .slice(0, 50) // limit results
               .map((f) => (
