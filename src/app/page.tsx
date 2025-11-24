@@ -48,6 +48,19 @@ export default function Home() {
 
   const [cmdOpen, setCmdOpen] = useState(false);
   const [cmdQuery, setCmdQuery] = useState("");
+  const [normalizedQuery, setNormalizedQuery] = useState("");
+
+  const numericNormalize = (s: string) => s.replace(/_0+(\d+)/g, "_$1");
+
+  const normalize = (s?: string) =>
+    (s || "")
+      .trim()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\u00A0/g, " ")
+      .replace(/[\u200B-\u200F\u2060\uFEFF]/g, "")
+      .replace(/\s+/g, " ")
+      .toLocaleLowerCase();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -430,17 +443,39 @@ export default function Home() {
         <CommandInput
           placeholder="Search invaders by id..."
           value={cmdQuery}
-          onValueChange={(v: string) => setCmdQuery(v)}
+          onValueChange={(v: string) => {
+            setCmdQuery(v);
+            setNormalizedQuery(normalize(v));
+          }}
         />
         <CommandList>
           <CommandEmpty>No invaders found.</CommandEmpty>
           <CommandGroup heading="Invaders">
             {geojsonRef.current
-              .filter((f) =>
-                f.properties.id
-                  .toLowerCase()
-                  .includes(cmdQuery.trim().toLowerCase())
-              )
+              .filter((f) => {
+                const rawId = f?.properties?.id;
+                if (!rawId) return false;
+                const q = normalizedQuery;
+                if (!q) return true;
+
+                const id = normalize(rawId);
+                const fallbackId = normalize(rawId.replace(/_\d+$/, ""));
+
+                const qNum = numericNormalize(q);
+                const idNum = numericNormalize(id);
+                const fallbackNum = numericNormalize(fallbackId);
+
+                return (
+                  id.includes(q) ||
+                  idNum.includes(q) ||
+                  id.includes(qNum) ||
+                  idNum.includes(qNum) ||
+                  fallbackId.includes(q) ||
+                  fallbackNum.includes(q) ||
+                  fallbackId.includes(qNum) ||
+                  fallbackNum.includes(qNum)
+                );
+              })
               .slice(0, 50) // limit results
               .map((f) => (
                 <CommandItem
@@ -449,6 +484,7 @@ export default function Home() {
                     openFeatureOnMap(f);
                     setCmdOpen(false);
                     setCmdQuery("");
+                    setNormalizedQuery("");
                   }}
                 >
                   <Search className="mr-2" />
