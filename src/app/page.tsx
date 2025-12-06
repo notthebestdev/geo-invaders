@@ -138,26 +138,17 @@ export default function Home() {
     };
   }, []);
 
-  const openFeatureOnMap = (
-    feature: GeoJSON.Feature<
-      GeoJSON.Point,
-      { id: string; status: string; instagramUrl?: string }
-    >
+  const createInvaderPopup = (
+    id: string,
+    coords: [number, number],
+    instagramUrl?: string
   ) => {
-    const map = mapRef.current;
-    if (!map) return;
-    const coords = feature.geometry.coordinates as [number, number];
-    const { id, instagramUrl } = feature.properties;
     const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
     const fallbackId = id.replace(/_\d+$/, "");
     const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
     const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
 
-    // center & zoom
-    map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 14) });
-
-    // show popup
-    new maplibregl.Popup()
+    return new maplibregl.Popup()
       .setLngLat(coords)
       .setHTML(
         `<div style="text-align:center;">
@@ -171,8 +162,22 @@ export default function Home() {
               : ""
           }
         </div>`
-      )
-      .addTo(map);
+      );
+  };
+
+  const openFeatureOnMap = (
+    feature: GeoJSON.Feature<
+      GeoJSON.Point,
+      { id: string; status: string; instagramUrl?: string }
+    >
+  ) => {
+    const map = mapRef.current;
+    if (!map) return;
+    const coords = feature.geometry.coordinates as [number, number];
+    const { id, instagramUrl } = feature.properties;
+
+    map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 14) });
+    createInvaderPopup(id, coords, instagramUrl).addTo(map);
   };
 
   useEffect(() => {
@@ -335,27 +340,7 @@ export default function Home() {
               number,
             ];
             const { id, instagramUrl } = e.features[0].properties;
-            const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
-            const fallbackId = id.replace(/_\d+$/, "");
-            const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
-
-            const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
-            new maplibregl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(
-                `<div style="text-align:center;">
-                  <div style="font-weight:bold; color:#000;">${id}</div>
-                  <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
-                    onerror="this.onerror=null;this.src='${fallbackUrl}';"
-                  />
-                  ${
-                    instagramUrl
-                      ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
-                      : ""
-                  }
-                </div>`
-              )
-              .addTo(map);
+            createInvaderPopup(id, coordinates, instagramUrl).addTo(map);
           });
 
           // Zoom into cluster on click
