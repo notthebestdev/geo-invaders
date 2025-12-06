@@ -143,3 +143,7 @@ vite.config.ts.timestamp-*
 # OS
 .DS_Store
 Thumbs.db
+
+# Next.js env
+
+next-env.d.ts
