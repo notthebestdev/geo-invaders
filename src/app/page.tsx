@@ -518,19 +518,15 @@ export default function Home() {
                 const id = normalize(rawId);
                 const fallbackId = normalize(rawId.replace(/_\d+$/, ""));
 
-                const qNum = numericNormalize(q);
-                const idNum = numericNormalize(id);
-                const fallbackNum = numericNormalize(fallbackId);
+                const qNorm = numericNormalize(q);
+                const idNorm = numericNormalize(id);
+                const fallbackNorm = numericNormalize(fallbackId);
 
                 return (
                   id.includes(q) ||
-                  idNum.includes(q) ||
-                  id.includes(qNum) ||
-                  idNum.includes(qNum) ||
+                  idNorm.includes(qNorm) ||
                   fallbackId.includes(q) ||
-                  fallbackNum.includes(q) ||
-                  fallbackId.includes(qNum) ||
-                  fallbackNum.includes(qNum)
+                  fallbackNorm.includes(qNorm)
                 );
               })
               .slice(0, 50) // limit results
