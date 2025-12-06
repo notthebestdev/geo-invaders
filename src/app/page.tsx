@@ -546,6 +546,7 @@ export default function Home() {
               .map((f) => (
                 <CommandItem
                   key={f.properties.id}
+                  value={f.properties.id}
                   onSelect={() => {
                     openFeatureOnMap(f);
                     setCmdOpen(false);
