@@ -509,8 +509,9 @@ export default function Home() {
           placeholder="Search invaders by id..."
           value={cmdQuery}
           onValueChange={(v: string) => {
-            setCmdQuery(v);
-            setNormalizedQuery(normalize(v));
+            const trimmed = v.slice(0, 100); // Limit to 100 characters
+            setCmdQuery(trimmed);
+            setNormalizedQuery(normalize(trimmed));
           }}
         />
         <CommandList>
