@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Settings } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
@@ -185,6 +185,31 @@ export default function Home() {
     map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 14) });
     createInvaderPopup(id, coords, instagramUrl).addTo(map);
   };
+
+  const filteredInvaders = useMemo(() => {
+    return geojsonRef.current
+      .filter((f) => {
+        const rawId = f?.properties?.id;
+        if (!rawId) return false;
+        const q = normalizedQuery;
+        if (!q) return true;
+
+        const id = normalize(rawId);
+        const fallbackId = normalize(rawId.replace(/_\d+$/, ""));
+
+        const qNorm = numericNormalize(q);
+        const idNorm = numericNormalize(id);
+        const fallbackNorm = numericNormalize(fallbackId);
+
+        return (
+          id.includes(q) ||
+          idNorm.includes(qNorm) ||
+          fallbackId.includes(q) ||
+          fallbackNorm.includes(qNorm)
+        );
+      })
+      .slice(0, 50);
+  }, [normalizedQuery]);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -508,43 +533,21 @@ export default function Home() {
         <CommandList>
           <CommandEmpty>No invaders found.</CommandEmpty>
           <CommandGroup heading="Invaders">
-            {geojsonRef.current
-              .filter((f) => {
-                const rawId = f?.properties?.id;
-                if (!rawId) return false;
-                const q = normalizedQuery;
-                if (!q) return true;
-
-                const id = normalize(rawId);
-                const fallbackId = normalize(rawId.replace(/_\d+$/, ""));
-
-                const qNorm = numericNormalize(q);
-                const idNorm = numericNormalize(id);
-                const fallbackNorm = numericNormalize(fallbackId);
-
-                return (
-                  id.includes(q) ||
-                  idNorm.includes(qNorm) ||
-                  fallbackId.includes(q) ||
-                  fallbackNorm.includes(qNorm)
-                );
-              })
-              .slice(0, 50) // limit results
-              .map((f) => (
-                <CommandItem
-                  key={f.properties.id}
-                  value={f.properties.id}
-                  onSelect={() => {
-                    openFeatureOnMap(f);
-                    setCmdOpen(false);
-                    setCmdQuery("");
-                    setNormalizedQuery("");
-                  }}
-                >
-                  <Search className="mr-2" aria-hidden="true" />
-                  <span>{f.properties.id}</span>
-                </CommandItem>
-              ))}
+            {filteredInvaders.map((f) => (
+              <CommandItem
+                key={f.properties.id}
+                value={f.properties.id}
+                onSelect={() => {
+                  openFeatureOnMap(f);
+                  setCmdOpen(false);
+                  setCmdQuery("");
+                  setNormalizedQuery("");
+                }}
+              >
+                <Search className="mr-2" aria-hidden="true" />
+                <span>{f.properties.id}</span>
+              </CommandItem>
+            ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>
