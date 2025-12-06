@@ -1,19 +1,82 @@
-# Geo Invaders
+# 🗺️ Geo Invaders
 
-An interactive map for Flash Invaders, built in Next.js.
+An interactive web application for exploring and tracking Flash Invaders street art across the globe.
 
-## Getting Started
+Built with Next.js and MapTiler, this app helps you discover, locate, and navigate to Space Invader mosaics in your city.
 
-First, run the development server:
+## ✨ Features
+
+- **Interactive Map** - Explore Flash Invaders locations worldwide with a smooth, responsive map interface
+- **Real-time Geolocation** - Track your position and find nearby invaders
+- **Smart Navigation** - Get directions to any invader location
+- **Search & Filter** - Find specific invaders or browse by area
+- **Mobile Responsive** - Optimized for both desktop and mobile devices
+- **Fast Performance** - Static site generation for lightning-fast loading
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 20 or higher
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/geo-invaders.git
+cd geo-invaders
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file and add your MapTiler API key:
+
+```env
+NEXT_PUBLIC_MAPTILER_KEY=your_api_key_here
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 🛠️ Tech Stack
+
+- **Framework** - [Next.js 15](https://nextjs.org/) with App Router
+- **Mapping** - [MapTiler](https://www.maptiler.com/) & MapLibre GL
+- **Styling** - Tailwind CSS
+- **Language** - TypeScript
+- **Deployment** - GitHub Pages
+
+## 📦 Build & Deploy
+
+Build for production:
+
+```bash
+npm run build
+```
+
+The app is automatically deployed to GitHub Pages on every push to the `main` branch.
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+Made with ❤️ for the Flash Invaders community by TheBestDeveloper
