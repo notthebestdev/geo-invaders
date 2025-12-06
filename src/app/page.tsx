@@ -553,7 +553,7 @@ export default function Home() {
                     setNormalizedQuery("");
                   }}
                 >
-                  <Search className="mr-2" />
+                  <Search className="mr-2" aria-hidden="true" />
                   <span>{f.properties.id}</span>
                 </CommandItem>
               ))}
