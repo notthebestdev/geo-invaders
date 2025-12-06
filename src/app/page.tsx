@@ -176,6 +176,12 @@ export default function Home() {
     const coords = feature.geometry.coordinates as [number, number];
     const { id, instagramUrl } = feature.properties;
 
+    // Close all existing popups
+    const popups = document.getElementsByClassName("maplibregl-popup");
+    if (popups.length) {
+      Array.from(popups).forEach((popup) => popup.remove());
+    }
+
     map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 14) });
     createInvaderPopup(id, coords, instagramUrl).addTo(map);
   };
