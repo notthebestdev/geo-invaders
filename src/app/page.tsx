@@ -141,17 +141,15 @@ export default function Home() {
   const createInvaderPopup = (
     id: string,
     coords: [number, number],
-    instagramUrl?: string
+    instagramUrl?: string,
   ) => {
     const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
     const fallbackId = id.replace(/_\d+$/, "");
     const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
     const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
 
-    return new maplibregl.Popup()
-      .setLngLat(coords)
-      .setHTML(
-        `<div style="text-align:center;">
+    return new maplibregl.Popup().setLngLat(coords).setHTML(
+      `<div style="text-align:center;">
           <div style="font-weight:bold; color:#000;">${id}</div>
           <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
             onerror="this.onerror=null;this.src='${fallbackUrl}';"
@@ -161,15 +159,15 @@ export default function Home() {
               ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
               : ""
           }
-        </div>`
-      );
+        </div>`,
+    );
   };
 
   const openFeatureOnMap = (
     feature: GeoJSON.Feature<
       GeoJSON.Point,
       { id: string; status: string; instagramUrl?: string }
-    >
+    >,
   ) => {
     const map = mapRef.current;
     if (!map) return;
@@ -210,12 +208,12 @@ export default function Home() {
       window.history.replaceState(
         {},
         "",
-        `${window.location.pathname}?${params.toString()}`
+        `${window.location.pathname}?${params.toString()}`,
       );
     });
 
     fetch(
-      "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json"
+      "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json",
     )
       .then((res) => res.json())
       .then((data) => {
@@ -230,7 +228,7 @@ export default function Home() {
         geojsonRef.current = (data as Invader[])
           .filter(
             (invader: Invader) =>
-              invader.obf_lat && invader.obf_lng && invader.status !== "hidden"
+              invader.obf_lat && invader.obf_lng && invader.status !== "hidden",
           )
           .map((invader: Invader) => ({
             type: "Feature",
@@ -255,14 +253,14 @@ export default function Home() {
               feature: GeoJSON.Feature<
                 GeoJSON.Point,
                 { id: string; status: string; instagramUrl?: string }
-              >
+              >,
             ) => {
               if (hideDamaged && feature.properties.status === "damaged")
                 return false;
               if (hideDestroyed && feature.properties.status === "destroyed")
                 return false;
               return true;
-            }
+            },
           ),
         });
 
@@ -356,7 +354,7 @@ export default function Home() {
             });
             const clusterId = features[0].properties.cluster_id;
             const source = map.getSource(
-              "invaders"
+              "invaders",
             ) as maplibregl.GeoJSONSource;
             const zoom = await source.getClusterExpansionZoom(clusterId);
             // Typecast geometry to Point to access coordinates
@@ -400,14 +398,14 @@ export default function Home() {
           feature: GeoJSON.Feature<
             GeoJSON.Point,
             { id: string; status: string; instagramUrl?: string }
-          >
+          >,
         ) => {
           if (hideDamaged && feature.properties.status === "damaged")
             return false;
           if (hideDestroyed && feature.properties.status === "destroyed")
             return false;
           return true;
-        }
+        },
       ),
     };
     source.setData(filteredGeoJSON);
