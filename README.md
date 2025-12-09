@@ -28,7 +28,9 @@ Built with Next.js and MapTiler, this app helps you discover, locate, and naviga
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/geo-invaders.git
+git clone https://github.com/notthebestdev/geo-invaders.git
+# or, you can also do: gh repo clone notthebestdev/geo-invaders
+
 cd geo-invaders
 ```
 
