@@ -148,7 +148,7 @@ export default function Home() {
     const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
     const fallbackId = id.replace(/_\d+$/, "");
     const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
-    const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`;
+    const instagramIcon = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
 
     return new maplibregl.Popup().setLngLat(coords).setHTML(
       `<div style="text-align:center;">
@@ -158,7 +158,7 @@ export default function Home() {
           />
           ${
             instagramUrl
-              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${siInstagram.svg}</a>`
+              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#FF0069;' title='View on Instagram'>${instagramIcon}</a>`
               : ""
           }
         </div>`
