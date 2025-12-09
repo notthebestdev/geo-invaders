@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/command";
 import { siInstagram } from "simple-icons";
 
+const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
+
 function getInitialView() {
   if (typeof window === "undefined")
     return { lng: 2.3522, lat: 48.8566, zoom: 10 };
@@ -148,7 +150,6 @@ export default function Home() {
     const githubUrl = `https://raw.githubusercontent.com/CAAAB/download_files/refs/heads/main/images/${id}.png`;
     const fallbackId = id.replace(/_\d+$/, "");
     const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
-    const instagramIcon = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
 
     return new maplibregl.Popup().setLngLat(coords).setHTML(
       `<div style="text-align:center;">
@@ -158,7 +159,7 @@ export default function Home() {
           />
           ${
             instagramUrl
-              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#FF0069;' title='View on Instagram'>${instagramIcon}</a>`
+              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#FF0069;' title='View on Instagram'>${INSTAGRAM_ICON}</a>`
               : ""
           }
         </div>`
