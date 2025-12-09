@@ -1,5 +1,8 @@
 # 🗺️ Geo Invaders
 
+> [!IMPORTANT]  
+> Right now, the project is in beta. If you find bugs, don't hesitate to fix them and contribute to the project if you know how!
+
 An interactive web application for exploring and tracking Flash Invaders street art across the globe.
 
 Built with Next.js and MapTiler, this app helps you discover, locate, and navigate to Space Invader mosaics in your city.
