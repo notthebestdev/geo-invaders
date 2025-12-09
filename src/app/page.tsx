@@ -22,6 +22,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { siInstagram } from "simple-icons";
 
 function getInitialView() {
   if (typeof window === "undefined")
@@ -157,7 +158,7 @@ export default function Home() {
           />
           ${
             instagramUrl
-              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${instagramIcon}</a>`
+              ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#E1306C;' title='View on Instagram'>${siInstagram.svg}</a>`
               : ""
           }
         </div>`
