@@ -50,7 +50,7 @@ export function CommandPalette({
     const [normalizedQuery, setNormalizedQuery] = useState("");
 
     // Long press detection
-    const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const longPressTimerRef = useRef<number | null>(null);
     const touchStartPosRef = useRef<{ x: number; y: number } | null>(null);
 
     // Keyboard shortcut handler
@@ -75,7 +75,7 @@ export function CommandPalette({
             const touch = e.touches[0];
             touchStartPosRef.current = { x: touch.clientX, y: touch.clientY };
 
-            longPressTimerRef.current = setTimeout(() => {
+            longPressTimerRef.current = window.setTimeout(() => {
                 setCmdOpen(true);
             }, 1000);
         };
