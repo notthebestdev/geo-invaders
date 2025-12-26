@@ -20,6 +20,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           use-conventional-commits: false
-          commit-message: "chore(deps): changeset for dependency update [skip dependabot]"
+          commit-message: "chore(deps): changeset for dependency update"
           author-name: github-actions[bot]
           author-email: github-actions[bot]@users.noreply.github.com
