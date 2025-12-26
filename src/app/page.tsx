@@ -1,27 +1,10 @@
-/* eslint-disable react-hooks/refs */
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Settings } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
-import { Button } from "@/components/ui/button";
-import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-} from "@/components/ui/popover";
-import { Switch } from "@/components/ui/switch";
-
-import { Search } from "lucide-react";
-import {
-    CommandDialog,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command";
+import { CommandPalette } from "@/components/ui/CommandPalette";
+import { Settings } from "@/components/ui/Settings";
 import { siInstagram } from "simple-icons";
 
 const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
@@ -49,98 +32,6 @@ export default function Home() {
             { id: string; status: string; instagramUrl?: string }
         >[]
     >([]);
-
-    const [cmdOpen, setCmdOpen] = useState(false);
-    const [cmdQuery, setCmdQuery] = useState("");
-    const [normalizedQuery, setNormalizedQuery] = useState("");
-
-    // Long press detection
-    const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const touchStartPosRef = useRef<{ x: number; y: number } | null>(null);
-
-    const numericNormalize = (s: string) => s.replace(/_0+(\d+)/g, "_$1");
-
-    const normalize = (s?: string) =>
-        (s || "")
-            .trim()
-            .normalize("NFKD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\u00A0/g, " ")
-            .replace(/[\u200B-\u200F\u2060\uFEFF]/g, "")
-            .replace(/\s+/g, " ")
-            .toLocaleLowerCase();
-
-    useEffect(() => {
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault();
-                setCmdOpen((o) => !o);
-            }
-        };
-        document.addEventListener("keydown", onKey);
-        return () => document.removeEventListener("keydown", onKey);
-    }, []);
-
-    // Long press handler
-    useEffect(() => {
-        const container = mapContainer.current;
-        if (!container) return;
-
-        const handleTouchStart = (e: TouchEvent) => {
-            if (e.touches.length !== 1) return;
-            const touch = e.touches[0];
-            touchStartPosRef.current = { x: touch.clientX, y: touch.clientY };
-
-            longPressTimerRef.current = setTimeout(() => {
-                setCmdOpen(true);
-            }, 1000);
-        };
-
-        const handleTouchMove = (e: TouchEvent) => {
-            if (!touchStartPosRef.current || e.touches.length !== 1) {
-                if (longPressTimerRef.current) {
-                    clearTimeout(longPressTimerRef.current);
-                    longPressTimerRef.current = null;
-                }
-                return;
-            }
-
-            const touch = e.touches[0];
-            const deltaX = Math.abs(touch.clientX - touchStartPosRef.current.x);
-            const deltaY = Math.abs(touch.clientY - touchStartPosRef.current.y);
-
-            // Cancel long press if user moves more than 10px
-            if (deltaX > 10 || deltaY > 10) {
-                if (longPressTimerRef.current) {
-                    clearTimeout(longPressTimerRef.current);
-                    longPressTimerRef.current = null;
-                }
-            }
-        };
-
-        const handleTouchEnd = () => {
-            if (longPressTimerRef.current) {
-                clearTimeout(longPressTimerRef.current);
-                longPressTimerRef.current = null;
-            }
-            touchStartPosRef.current = null;
-        };
-
-        container.addEventListener("touchstart", handleTouchStart);
-        container.addEventListener("touchmove", handleTouchMove);
-        container.addEventListener("touchend", handleTouchEnd);
-        container.addEventListener("touchcancel", handleTouchEnd);
-
-        return () => {
-            container.removeEventListener("touchstart", handleTouchStart);
-            container.removeEventListener("touchmove", handleTouchMove);
-            container.removeEventListener("touchend", handleTouchEnd);
-            container.removeEventListener("touchcancel", handleTouchEnd);
-            if (longPressTimerRef.current) {
-                clearTimeout(longPressTimerRef.current);
-            }
-        };
-    }, []);
 
     const createInvaderPopup = (
         id: string,
@@ -465,139 +356,18 @@ export default function Home() {
                 />
             </div>
 
-            {/* Settings menu using shadcn Popover */}
-            <div className="fixed top-4 right-4 z-50">
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex items-center gap-2"
-                        >
-                            <Settings size={18} />
-                            <span className="sr-only">Open settings</span>
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                        side="bottom"
-                        align="end"
-                        className="w-[260px] p-4"
-                    >
-                        <div className="flex items-center justify-between mb-3">
-                            <div>
-                                <div className="text-sm font-medium">
-                                    Settings
-                                </div>
-                                <div className="text-xs text-muted-foreground">
-                                    Filter invaders on the map
-                                </div>
-                            </div>
-                        </div>
+            <Settings
+                hideDamaged={hideDamaged}
+                hideDestroyed={hideDestroyed}
+                onHideDamagedChange={setHideDamaged}
+                onHideDestroyedChange={setHideDestroyed}
+            />
 
-                        <div className="space-y-3">
-                            <div>
-                                <label className="flex items-center justify-between cursor-pointer">
-                                    <div className="text-sm">
-                                        Hide Damaged Invaders
-                                    </div>
-                                    <Switch
-                                        checked={hideDamaged}
-                                        onCheckedChange={(v) =>
-                                            setHideDamaged(Boolean(v))
-                                        }
-                                    />
-                                </label>
-                                <div className="text-xs text-muted-foreground mt-1">
-                                    Removes invaders marked as
-                                    &quot;damaged&quot; from the map to reduce
-                                    visual clutter while keeping intact ones
-                                    visible.
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="flex items-center justify-between cursor-pointer">
-                                    <div className="text-sm">
-                                        Hide Destroyed Invaders
-                                    </div>
-                                    <Switch
-                                        checked={hideDestroyed}
-                                        onCheckedChange={(v) =>
-                                            setHideDestroyed(Boolean(v))
-                                        }
-                                    />
-                                </label>
-                                <div className="text-xs text-muted-foreground mt-1">
-                                    Hides invaders that are recorded as
-                                    &quot;destroyed&quot; so you can focus on
-                                    current, intact pieces.
-                                </div>
-                            </div>
-                        </div>
-                    </PopoverContent>
-                </Popover>
-            </div>
-
-            {/* Command Palette for searching invaders */}
-            <CommandDialog open={cmdOpen} onOpenChange={setCmdOpen}>
-                <CommandInput
-                    placeholder="Search invaders by id..."
-                    value={cmdQuery}
-                    onValueChange={(v: string) => {
-                        const trimmed = v.slice(0, 100); // Limit to 100 characters
-                        setCmdQuery(trimmed);
-                        setNormalizedQuery(normalize(trimmed));
-                    }}
-                />
-                <CommandList>
-                    <CommandEmpty>No invaders found.</CommandEmpty>
-                    <CommandGroup heading="Invaders">
-                        {geojsonRef.current
-                            .filter((f) => {
-                                const rawId = f?.properties?.id;
-                                if (!rawId) return false;
-                                const q = normalizedQuery;
-                                if (!q) return true;
-
-                                const id = normalize(rawId);
-                                const fallbackId = normalize(
-                                    rawId.replace(/_\d+$/, ""),
-                                );
-
-                                const qNorm = numericNormalize(q);
-                                const idNorm = numericNormalize(id);
-                                const fallbackNorm =
-                                    numericNormalize(fallbackId);
-
-                                return (
-                                    id.includes(q) ||
-                                    idNorm.includes(qNorm) ||
-                                    fallbackId.includes(q) ||
-                                    fallbackNorm.includes(qNorm)
-                                );
-                            })
-                            .slice(0, 50) // limit results
-                            .map((f) => (
-                                <CommandItem
-                                    key={f.properties.id}
-                                    value={f.properties.id}
-                                    onSelect={() => {
-                                        openFeatureOnMap(f);
-                                        setCmdOpen(false);
-                                        setCmdQuery("");
-                                        setNormalizedQuery("");
-                                    }}
-                                >
-                                    <Search
-                                        className="mr-2"
-                                        aria-hidden="true"
-                                    />
-                                    <span>{f.properties.id}</span>
-                                </CommandItem>
-                            ))}
-                    </CommandGroup>
-                </CommandList>
-            </CommandDialog>
+            <CommandPalette
+                geojsonRef={geojsonRef}
+                onSelectFeature={openFeatureOnMap}
+                mapContainer={mapContainer}
+            />
         </>
     );
 }
