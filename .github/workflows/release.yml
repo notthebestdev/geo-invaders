@@ -31,7 +31,7 @@ jobs:
               run: npm ci --prefer-offline
 
             - name: Create Release Pull Request
-              uses: changesets/action@v1
+              uses: changesets/action@v1.5.3
               with:
                   version: "true"
                   publish: ""
