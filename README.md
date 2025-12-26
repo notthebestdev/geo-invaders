@@ -64,6 +64,58 @@ npm run dev
 - **Language** - TypeScript
 - **Deployment** - GitHub Pages
 
+## 📂 Project structure
+
+```bash
+└── 📁geo-invaders
+    └── 📁.github
+        └── 📁workflows
+            ├── dependabot-changeset.yml
+            ├── lint.yml
+            ├── nextjs.yml
+            ├── release.yml
+        ├── dependabot.yml
+    └── 📁public
+        ├── file.svg
+        ├── globe.svg
+        ├── next.svg
+        ├── vercel.svg
+        ├── window.svg
+    └── 📁src
+        └── 📁app
+            ├── favicon.ico
+            ├── globals.css
+            ├── layout.tsx
+            ├── page.tsx
+        └── 📁components
+            └── 📁ui
+                ├── button.tsx
+                ├── command.tsx
+                ├── CommandPalette.tsx
+                ├── dialog.tsx
+                ├── popover.tsx
+                ├── Settings.tsx
+                ├── switch.tsx
+        └── 📁lib
+            ├── utils.ts
+    ├── .editorconfig
+    ├── .env.example
+    ├── .gitignore
+    ├── .markdownlint.json
+    ├── .mergify.yml
+    ├── .prettierignore
+    ├── CHANGELOG.md
+    ├── components.json
+    ├── eslint.config.mjs
+    ├── LICENSE
+    ├── next.config.ts
+    ├── package-lock.json
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── README.md
+    └── tsconfig.json
+```
+
 ## 📦 Build & Deploy
 
 Build for production:
