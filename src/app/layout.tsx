@@ -55,8 +55,8 @@ export const metadata: Metadata = {
         viewportFit: "cover",
     },
     icons: {
-        icon: "/icon.png",
-        apple: "/apple-touch-icon.png",
+        icon: "/geo-invaders/icon.png",
+        apple: "/geo-invaders/apple-touch-icon.png",
     },
 };
 
