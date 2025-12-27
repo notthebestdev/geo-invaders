@@ -33,8 +33,8 @@ jobs:
             - name: Create Release Pull Request
               uses: changesets/action@v1.5.3
               with:
-                  commit: ':bookmark: ci(repo): Version packages'
-                  title: ':bookmark: ci(repo): Version packages'
+                  commit: 'ci(repo): Version packages'
+                  title: 'ci(repo): Version packages'
                   version: "npx changeset version"
                   publish: ""
               env:
