@@ -1,4 +1,7 @@
-# 🗺️ Geo Invaders
+<div align="center">
+<img src=".github/assets/icon.png" height="512" width="512" alt="Logo" />
+<h1>Geo Invaders</h1>
+</div>
 
 > [!IMPORTANT]  
 > Right now, the project is in beta. If you find bugs, don't hesitate to fix them and contribute to the project if you know how!
