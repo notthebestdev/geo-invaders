@@ -9,13 +9,9 @@ updates:
       directory: "/" # Location of package manifests
       schedule:
           interval: "weekly"
-      commit-message:
-          prefix: "⬆️"
       ignore:
         - dependency-name: "@typescript-eslint/eslint-plugin"
     - package-ecosystem: "github-actions"
       directory: "/"
       schedule:
           interval: "weekly"
-      commit-message:
-          prefix: "⬆️"
