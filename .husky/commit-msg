@@ -1,1 +1,1 @@
-echo "npm run commitlint \${1}" > .husky/commit-msg
+npm run commitlint ${1}
