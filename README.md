@@ -1,5 +1,5 @@
 <div align="center">
-<img src=".github/assets/icon.png" height="512" width="512" alt="Logo" />
+<img src=".github/assets/icon.png" height="256" width="256" alt="Logo" />
 <h1>Geo Invaders</h1>
 </div>
 
