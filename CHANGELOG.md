@@ -1,5 +1,170 @@
 # geo-invaders
 
+## 0.2.1
+
+### Patch Changes
+
+- [#60](https://github.com/notthebestdev/geo-invaders/pull/60) [`a2c16de`](https://github.com/notthebestdev/geo-invaders/commit/a2c16de7f70a68873dae6d42ee81568d38975134) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump simple-icons from 16.2.0 to 16.3.0
+
+  Bumps [simple-icons](https://github.com/simple-icons/simple-icons) from 16.2.0 to 16.3.0.
+  - [Release notes](https://github.com/simple-icons/simple-icons/releases)
+  - [Commits](https://github.com/simple-icons/simple-icons/compare/16.2.0...16.3.0)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: simple-icons
+    dependency-version: 16.3.0
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#61](https://github.com/notthebestdev/geo-invaders/pull/61) [`6f9326c`](https://github.com/notthebestdev/geo-invaders/commit/6f9326ce4d84304b68f3ec185c60efe558696450) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/config-conventional from 20.2.0 to 20.3.0
+
+  Bumps [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/config-conventional) from 20.2.0 to 20.3.0.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.0/@commitlint/config-conventional)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/config-conventional"
+    dependency-version: 20.3.0
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#62](https://github.com/notthebestdev/geo-invaders/pull/62) [`a863514`](https://github.com/notthebestdev/geo-invaders/commit/a863514ac961ac17649e4fbf2edd07abb6e38c59) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/cli from 20.2.0 to 20.3.0
+
+  Bumps [@commitlint/cli](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/cli) from 20.2.0 to 20.3.0.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/cli/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.0/@commitlint/cli)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/cli"
+    dependency-version: 20.3.0
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#63](https://github.com/notthebestdev/geo-invaders/pull/63) [`299c53c`](https://github.com/notthebestdev/geo-invaders/commit/299c53cb63e407aa320fc63ee3aa84e245ca3133) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/prompt-cli from 20.2.0 to 20.3.0
+
+  Bumps [@commitlint/prompt-cli](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/prompt-cli) from 20.2.0 to 20.3.0.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/prompt-cli/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.0/@commitlint/prompt-cli)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/prompt-cli"
+    dependency-version: 20.3.0
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#65](https://github.com/notthebestdev/geo-invaders/pull/65) [`c3f9dc2`](https://github.com/notthebestdev/geo-invaders/commit/c3f9dc2b945983019d2d460b9863b5eddf2ed983) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/cli from 20.3.0 to 20.3.1
+
+  Bumps [@commitlint/cli](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/cli) from 20.3.0 to 20.3.1.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/cli/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.1/@commitlint/cli)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/cli"
+    dependency-version: 20.3.1
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#66](https://github.com/notthebestdev/geo-invaders/pull/66) [`7a85259`](https://github.com/notthebestdev/geo-invaders/commit/7a85259e6d5679bf1465ceef68cb0ad17e90a06b) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump baseline-browser-mapping from 2.9.11 to 2.9.13
+
+  Bumps [baseline-browser-mapping](https://github.com/web-platform-dx/baseline-browser-mapping) from 2.9.11 to 2.9.13.
+  - [Release notes](https://github.com/web-platform-dx/baseline-browser-mapping/releases)
+  - [Commits](https://github.com/web-platform-dx/baseline-browser-mapping/compare/v2.9.11...v2.9.13)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: baseline-browser-mapping
+    dependency-version: 2.9.13
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#67](https://github.com/notthebestdev/geo-invaders/pull/67) [`7a46ede`](https://github.com/notthebestdev/geo-invaders/commit/7a46ede68f52105d678194e16d93ab74f25e0c11) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/config-conventional from 20.3.0 to 20.3.1
+
+  Bumps [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/config-conventional) from 20.3.0 to 20.3.1.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.1/@commitlint/config-conventional)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/config-conventional"
+    dependency-version: 20.3.1
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#68](https://github.com/notthebestdev/geo-invaders/pull/68) [`befd895`](https://github.com/notthebestdev/geo-invaders/commit/befd8951e82d87f2a605b01305c032e24a7a7cfd) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/prompt-cli from 20.3.0 to 20.3.1
+
+  Bumps [@commitlint/prompt-cli](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/prompt-cli) from 20.3.0 to 20.3.1.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/prompt-cli/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.3.1/@commitlint/prompt-cli)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/prompt-cli"
+    dependency-version: 20.3.1
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#69](https://github.com/notthebestdev/geo-invaders/pull/69) [`5679735`](https://github.com/notthebestdev/geo-invaders/commit/567973591d800d8f050f3b9eb094fef689e4ee27) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump simple-icons from 16.3.0 to 16.4.0
+
+  Bumps [simple-icons](https://github.com/simple-icons/simple-icons) from 16.3.0 to 16.4.0.
+  - [Release notes](https://github.com/simple-icons/simple-icons/releases)
+  - [Commits](https://github.com/simple-icons/simple-icons/compare/16.3.0...16.4.0)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: simple-icons
+    dependency-version: 16.4.0
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [`2b90415`](https://github.com/notthebestdev/geo-invaders/commit/2b904156feaecebb1fa0c0253ca7bbec6a7f5f77) Thanks [@notthebestdev](https://github.com/notthebestdev)! - chore: update icons
+
 ## 0.2.0
 
 ### Minor Changes
