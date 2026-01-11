@@ -45,10 +45,10 @@ npm install
 yarn install
 ```
 
-3. Create a `.env` file and add your MapTiler API key:
+3. Rename the `.env.example` file to `.env` and add your MapTiler API key:
 
 ```env
-NEXT_PUBLIC_MAPTILER_KEY=your_api_key_here
+NEXT_PUBLIC_MAPTILER_KEY=maptiler-key-123456 # Replace with your actual MapTiler API key
 ```
 
 4. Run the development server:
@@ -61,7 +61,7 @@ npm run dev
 
 ## 🛠️ Tech Stack
 
-- **Framework** - [Next.js 15](https://nextjs.org/) with App Router
+- **Framework** - [Next.js 16+](https://nextjs.org/) with App Router
 - **Mapping** - [MapTiler](https://www.maptiler.com/) & MapLibre GL
 - **Styling** - Tailwind CSS
 - **Language** - TypeScript
@@ -136,7 +136,3 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
-
----
-
-Made with ❤️ for the Flash Invaders community by TheBestDeveloper
