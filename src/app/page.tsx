@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
-import { CommandPalette } from "@/components/ui/CommandPalette";
-import { Settings } from "@/components/ui/Settings";
+import { CommandPalette } from "@/components/CommandPalette";
+import { Settings } from "@/components/Settings";
 import { siInstagram } from "simple-icons";
 
 const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;

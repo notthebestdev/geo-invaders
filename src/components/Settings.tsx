@@ -35,11 +35,7 @@ export function Settings({
                         <span className="sr-only">Open settings</span>
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent
-                    side="bottom"
-                    align="end"
-                    className="w-[260px] p-4"
-                >
+                <PopoverContent side="bottom" align="end" className="w-65 p-4">
                     <div className="flex items-center justify-between mb-3">
                         <div>
                             <div className="text-sm font-medium">Settings</div>
