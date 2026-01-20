@@ -13,6 +13,9 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
+const basePath =
+    process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
+
 export const metadata: Metadata = {
     title: "Geo Invaders",
     description: "An interactive map for the game Flash Invaders",
@@ -56,8 +59,8 @@ export const metadata: Metadata = {
         },
     },
     icons: {
-        icon: "/geo-invaders/icon.png",
-        apple: "/geo-invaders/apple-touch-icon.png",
+        icon: `${basePath}/icon.png`,
+        apple: `${basePath}/apple-touch-icon.png`,
     },
 };
 
