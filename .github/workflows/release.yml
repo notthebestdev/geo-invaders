@@ -31,11 +31,29 @@ jobs:
               run: npm ci --prefer-offline
 
             - name: Create Release Pull Request
+              id: changesets
               uses: changesets/action@v1.5.3
               with:
                   commit: "ci(repo): version packages"
                   title: "ci(repo): version packages"
                   version: "npx changeset version"
                   publish: ""
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Check if version was updated
+              id: version_check
+              run: |
+                  # Check if the last commit message indicates a version update
+                  LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+                  if [[ "$LAST_COMMIT_MSG" == *"ci(repo): version packages"* ]]; then
+                      echo "version_updated=true" >> $GITHUB_OUTPUT
+                  else
+                      echo "version_updated=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Create GitHub Release
+              if: steps.version_check.outputs.version_updated == 'true'
+              run: .github/scripts/create-release.sh
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
