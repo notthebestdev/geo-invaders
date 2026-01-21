@@ -73,10 +73,12 @@ echo -e "${GREEN}Creating GitHub release...${NC}"
 # Create GitHub release using gh CLI
 # The GITHUB_TOKEN environment variable should be set by the workflow
 if [ -n "$GITHUB_TOKEN" ]; then
+    # Wait a moment for the tag to propagate to GitHub
+    sleep 2
+    
     echo "$RELEASE_NOTES" | gh release create "$TAG_NAME" \
         --title "Release $TAG_NAME" \
-        --notes-file - \
-        --verify-tag
+        --notes-file -
     
     echo -e "${GREEN}✓ Release ${TAG_NAME} created successfully!${NC}"
 else
