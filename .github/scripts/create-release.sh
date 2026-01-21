@@ -45,7 +45,7 @@ fi
 RELEASE_NOTES=$(awk -v version="$VERSION" '
     /^## / {
         if (found) exit
-        if ($0 ~ version) {
+        if (index($0, version) > 0) {
             found=1
             next
         }
