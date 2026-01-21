@@ -3,8 +3,13 @@
 <h1>Geo Invaders</h1>
 </div>
 
-> [!IMPORTANT]  
-> Right now, the project is in beta. If you find bugs, don't hesitate to fix them and contribute to the project if you know how!
+<!-- Badges -->
+<div align="center">
+<picture><img src="https://badges.ws/badge/status-beta-yellow" /></picture>
+<picture><img src="https://badges.ws/maintenance/yes/2026" /></picture>
+<picture><img src="https://badges.ws/github/stars/notthebestdev/geo-invaders" /></picture>
+<picture><img src="https://badges.ws/github/license/notthebestdev/geo-invaders" /></picture>
+</div>
 
 An interactive web application for exploring and tracking Flash Invaders street art across the globe.
 
