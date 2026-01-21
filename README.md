@@ -11,6 +11,8 @@
 <picture><img src="https://badges.ws/github/license/notthebestdev/geo-invaders" alt="License badge indicating project is licensed under MIT license." /></picture>
 </div>
 
+<br>
+
 An interactive web application for exploring and tracking Flash Invaders street art across the globe.
 
 Built with Next.js and MapTiler, this app helps you discover, locate, and navigate to Space Invader mosaics in your city.
