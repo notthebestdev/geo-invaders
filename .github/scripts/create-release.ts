@@ -1,0 +1,113 @@
+import { Octokit } from "@octokit/rest";
+import { readFileSync } from "fs";
+import { resolve } from "path";
+
+/**
+ * Custom release script for Changeset
+ * Creates GitHub releases with changelog content after version bump
+ */
+async function createGitHubRelease() {
+  try {
+    // Get version from package.json
+    const packageJson = JSON.parse(
+      readFileSync(resolve(process.cwd(), "package.json"), "utf-8")
+    );
+    const version = packageJson.version;
+    const tagName = `v${version}`;
+
+    console.log(`📦 Creating release for version ${version}...`);
+
+    // Initialize Octokit
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_TOKEN,
+    });
+
+    // Get repository info from environment
+    const [owner, repo] = (process.env.GITHUB_REPOSITORY || "").split("/");
+
+    if (!owner || !repo) {
+      throw new Error("GITHUB_REPOSITORY environment variable not set");
+    }
+
+    // Check if tag already exists
+    try {
+      await octokit.rest.git.getRef({
+        owner,
+        repo,
+        ref: `tags/${tagName}`,
+      });
+      console.log(`⚠️  Tag ${tagName} already exists, skipping release creation`);
+      return;
+    } catch (error: any) {
+      if (error.status !== 404) throw error;
+      // Tag doesn't exist, continue with release creation
+    }
+
+    // Extract changelog for this version
+    const changelog = extractChangelog(version);
+
+    // Create GitHub release
+    const response = await octokit.rest.repos.createRelease({
+      owner,
+      repo,
+      tag_name: tagName,
+      name: `Release ${tagName}`,
+      body: changelog,
+      draft: false,
+      prerelease: false,
+    });
+
+    console.log(`✅ Release ${tagName} created successfully!`);
+    console.log(`🔗 ${response.data.html_url}`);
+  } catch (error) {
+    console.error("❌ Error creating release:", error);
+    process.exit(1);
+  }
+}
+
+/**
+ * Extract changelog content for a specific version
+ */
+function extractChangelog(version: string): string {
+  try {
+    const changelogPath = resolve(process.cwd(), "CHANGELOG.md");
+    const content = readFileSync(changelogPath, "utf-8");
+    const lines = content.split("\n");
+
+    let capturing = false;
+    const changelogLines: string[] = [];
+
+    for (const line of lines) {
+      // Start capturing when we find the version heading
+      if (line.match(/^## /) && line.includes(version)) {
+        capturing = true;
+        continue;
+      }
+
+      // Stop capturing when we hit the next version heading
+      if (capturing && line.match(/^## /)) {
+        break;
+      }
+
+      // Capture lines for this version
+      if (capturing) {
+        changelogLines.push(line);
+      }
+    }
+
+    const changelog = changelogLines.join("\n").trim();
+
+    if (!changelog) {
+      console.warn(`⚠️  No changelog found for version ${version}`);
+      return `Release version ${version}`;
+    }
+
+    return changelog;
+  } catch (error) {
+    console.warn("⚠️  Could not read CHANGELOG.md:", error);
+    return `Release version ${version}`;
+  }
+}
+
+// Run the release creation
+createGitHubRelease();
