@@ -26,7 +26,9 @@ async function createGitHubRelease() {
     const [owner, repo] = (process.env.GITHUB_REPOSITORY || "").split("/");
 
     if (!owner || !repo) {
-      throw new Error("GITHUB_REPOSITORY environment variable not set");
+      throw new Error(
+        "GITHUB_REPOSITORY environment variable not set or invalid format (expected: owner/repo)"
+      );
     }
 
     // Check if tag already exists
@@ -38,8 +40,15 @@ async function createGitHubRelease() {
       });
       console.log(`⚠️  Tag ${tagName} already exists, skipping release creation`);
       return;
-    } catch (error: any) {
-      if (error.status !== 404) throw error;
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        (error as { status: number }).status !== 404
+      ) {
+        throw error;
+      }
       // Tag doesn't exist, continue with release creation
     }
 
