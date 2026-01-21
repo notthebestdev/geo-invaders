@@ -1,14 +1,14 @@
 <div align="center">
-<img src=".github/assets/icon.png" height="256" width="256" alt="Logo" />
+<img src=".github/assets/icon.png" height="256" width="256" alt="Stylized space invader icon built from angular teal shapes against a deep blue gradient background, conveying retro arcade excitement and playful adventure" />
 <h1>Geo Invaders</h1>
 </div>
 
 <!-- Badges -->
 <div align="center">
-<picture><img src="https://badges.ws/badge/status-beta-yellow" /></picture>
-<picture><img src="https://badges.ws/maintenance/yes/2026" /></picture>
-<picture><img src="https://badges.ws/github/stars/notthebestdev/geo-invaders" /></picture>
-<picture><img src="https://badges.ws/github/license/notthebestdev/geo-invaders" /></picture>
+<picture><img src="https://badges.ws/badge/status-beta-yellow" alt="Badge indicating project is in beta." /></picture>
+<picture><img src="https://badges.ws/maintenance/yes/2026" alt="Maintenance badge indicating project is actively maintained through 2026." /></picture>
+<picture><img src="https://badges.ws/github/stars/notthebestdev/geo-invaders" alt="GitHub stars count badge for the geo-invaders repository." /></picture>
+<picture><img src="https://badges.ws/github/license/notthebestdev/geo-invaders" alt="License badge indicating project is licensed under MIT license." /></picture>
 </div>
 
 An interactive web application for exploring and tracking Flash Invaders street art across the globe.
