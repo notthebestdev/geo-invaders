@@ -1,5 +1,107 @@
 # geo-invaders
 
+## 0.3.0
+
+### Minor Changes
+
+- [`0626e38`](https://github.com/notthebestdev/geo-invaders/commit/0626e385ce0725c15ecbbd751a5f78fe6c6f0502) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(release): add merging and pushing after release creation
+
+- [`2c82451`](https://github.com/notthebestdev/geo-invaders/commit/2c82451b1fee275a69c64c2acb9a8c2a41756bc7) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(release): add check for existing releases before creation
+
+### Patch Changes
+
+- [`8200109`](https://github.com/notthebestdev/geo-invaders/commit/820010930035c3e3ce699e74c57be29a8b2f99f5) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs(readme): update project structure (again)
+
+- [#85](https://github.com/notthebestdev/geo-invaders/pull/85) [`096c5a2`](https://github.com/notthebestdev/geo-invaders/commit/096c5a2e0b9c4474540fd8c1584116853e4cb7d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump prettier from 3.8.0 to 3.8.1
+
+  Bumps [prettier](https://github.com/prettier/prettier) from 3.8.0 to 3.8.1.
+  - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Changelog](https://github.com/prettier/prettier/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/prettier/prettier/compare/3.8.0...3.8.1)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: prettier
+    dependency-version: 3.8.1
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#86](https://github.com/notthebestdev/geo-invaders/pull/86) [`c43c690`](https://github.com/notthebestdev/geo-invaders/commit/c43c69014f38f73b7af67029be5abe7178393235) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump eslint-config-next from 16.1.1 to 16.1.4
+
+  Bumps [eslint-config-next](https://github.com/vercel/next.js/tree/HEAD/packages/eslint-config-next) from 16.1.1 to 16.1.4.
+  - [Release notes](https://github.com/vercel/next.js/releases)
+  - [Changelog](https://github.com/vercel/next.js/blob/canary/release.js)
+  - [Commits](https://github.com/vercel/next.js/commits/v16.1.4/packages/eslint-config-next)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: eslint-config-next
+    dependency-version: 16.1.4
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#88](https://github.com/notthebestdev/geo-invaders/pull/88) [`12133f8`](https://github.com/notthebestdev/geo-invaders/commit/12133f8a2e11553aa900f9f5f798b897676396dd) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump next from 16.1.2 to 16.1.4
+
+  Bumps [next](https://github.com/vercel/next.js) from 16.1.2 to 16.1.4.
+  - [Release notes](https://github.com/vercel/next.js/releases)
+  - [Changelog](https://github.com/vercel/next.js/blob/canary/release.js)
+  - [Commits](https://github.com/vercel/next.js/compare/v16.1.2...v16.1.4)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: next
+    dependency-version: 16.1.4
+    dependency-type: direct:production
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#89](https://github.com/notthebestdev/geo-invaders/pull/89) [`e328730`](https://github.com/notthebestdev/geo-invaders/commit/e328730874ebe2ce8606b93e5b41201672216ed4) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @octokit/rest from 21.1.1 to 22.0.1
+
+  Bumps [@octokit/rest](https://github.com/octokit/rest.js) from 21.1.1 to 22.0.1.
+  - [Release notes](https://github.com/octokit/rest.js/releases)
+  - [Commits](https://github.com/octokit/rest.js/compare/v21.1.1...v22.0.1)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@octokit/rest"
+    dependency-version: 22.0.1
+    dependency-type: direct:development
+    update-type: version-update:semver-major
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#90](https://github.com/notthebestdev/geo-invaders/pull/90) [`bcea008`](https://github.com/notthebestdev/geo-invaders/commit/bcea008bdf3e57390e2aec8da1c0cde987ce97c0) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump simple-icons from 16.5.0 to 16.6.0
+
+  Bumps [simple-icons](https://github.com/simple-icons/simple-icons) from 16.5.0 to 16.6.0.
+  - [Release notes](https://github.com/simple-icons/simple-icons/releases)
+  - [Commits](https://github.com/simple-icons/simple-icons/compare/16.5.0...16.6.0)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: simple-icons
+    dependency-version: 16.6.0
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#82](https://github.com/notthebestdev/geo-invaders/pull/82) [`d816322`](https://github.com/notthebestdev/geo-invaders/commit/d816322507228e32b3c1f05ccfa31f956b57ff71) Thanks [@notthebestdev](https://github.com/notthebestdev)! - fix: fix vulnerability for code scanning alert no. 1
+
 ## 0.2.3
 
 ### Patch Changes
