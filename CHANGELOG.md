@@ -1,5 +1,17 @@
 # geo-invaders
 
+## 0.3.0
+
+### Minor Changes
+
+- [`2c82451`](https://github.com/notthebestdev/geo-invaders/commit/2c82451b1fee275a69c64c2acb9a8c2a41756bc7) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(release): add check for existing releases before creation
+
+### Patch Changes
+
+- [`8200109`](https://github.com/notthebestdev/geo-invaders/commit/820010930035c3e3ce699e74c57be29a8b2f99f5) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs(readme): update project structure (again)
+
+- [#82](https://github.com/notthebestdev/geo-invaders/pull/82) [`d816322`](https://github.com/notthebestdev/geo-invaders/commit/d816322507228e32b3c1f05ccfa31f956b57ff71) Thanks [@notthebestdev](https://github.com/notthebestdev)! - fix: fix vulnerability for code scanning alert no. 1
+
 ## 0.2.3
 
 ### Patch Changes
