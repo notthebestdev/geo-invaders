@@ -30,12 +30,13 @@ jobs:
             - name: Install Dependencies
               run: npm ci --prefer-offline
 
-            - name: Create Release Pull Request
+            - name: Create Release Pull Request or Publish
+              id: changesets
               uses: changesets/action@v1.5.3
               with:
                   commit: "ci(repo): version packages"
                   title: "ci(repo): version packages"
                   version: "npx changeset version"
-                  publish: ""
+                  publish: "npx tsx .github/scripts/create-release.ts"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
