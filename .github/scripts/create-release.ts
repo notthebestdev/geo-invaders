@@ -51,6 +51,27 @@ async function createGitHubRelease() {
       // Tag doesn't exist, continue with release creation
     }
 
+    // Check if release already exists
+    try {
+      await octokit.rest.repos.getReleaseByTag({
+        owner,
+        repo,
+        tag: tagName,
+      });
+      console.log(`⚠️ Release ${tagName} already exists, skipping creation`);
+      return;
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        (error as { status: number }).status !== 404
+      ) {
+        throw error;
+      }
+      // Release doesn't exist, continue with creation
+    }
+
     // Extract changelog for this version
     const changelog = extractChangelog(version);
 
@@ -59,7 +80,7 @@ async function createGitHubRelease() {
       owner,
       repo,
       tag_name: tagName,
-      name: `v${tagName}`,
+      name: `${tagName}`,
       body: changelog,
       draft: false,
       prerelease: false,

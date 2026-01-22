@@ -76,7 +76,7 @@ npm run dev
 
 ## 📂 Project structure
 
-```
+```bash
 └── 📁geo-invaders
     └── 📁.changeset
         ├── config.json
