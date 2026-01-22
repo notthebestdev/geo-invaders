@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
+import { execSync } from "child_process";
 
 /**
  * Custom release script for Changeset
@@ -88,6 +89,24 @@ async function createGitHubRelease() {
 
     console.log(`✅ Release ${tagName} created successfully!`);
     console.log(`🔗 ${response.data.html_url}`);
+
+    // Checkout prod, merge dev, and push
+    console.log(`\n🔄 Checking out prod branch...`);
+    try {
+      execSync("git checkout prod", { stdio: "inherit" });
+      console.log(`✅ Successfully checked out prod branch`);
+
+      console.log(`\n📝 Merging dev into prod...`);
+      execSync("git merge dev", { stdio: "inherit" });
+      console.log(`✅ Successfully merged dev into prod`);
+
+      console.log(`\n🚀 Pushing changes...`);
+      execSync("git push", { stdio: "inherit" });
+      console.log(`✅ Successfully pushed changes`);
+    } catch (gitError) {
+      console.error("❌ Git error:", gitError);
+      process.exit(1);
+    }
   } catch (error) {
     console.error("❌ Error creating release:", error);
     process.exit(1);
