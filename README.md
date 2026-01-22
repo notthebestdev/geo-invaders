@@ -84,6 +84,8 @@ npm run dev
     └── 📁.github
         └── 📁assets
             ├── icon.png
+        └── 📁scripts
+            ├── create-release.ts
         └── 📁workflows
             ├── dependabot-changeset.yml
             ├── lint.yml
