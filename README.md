@@ -76,21 +76,26 @@ npm run dev
 
 ## 📂 Project structure
 
-```bash
+```
 └── 📁geo-invaders
+    └── 📁.changeset
+        ├── config.json
+        ├── README.md
     └── 📁.github
+        └── 📁assets
+            ├── icon.png
         └── 📁workflows
             ├── dependabot-changeset.yml
             ├── lint.yml
             ├── nextjs.yml
             ├── release.yml
         ├── dependabot.yml
+    └── 📁.vscode
+        ├── settings.json
     └── 📁public
-        ├── file.svg
-        ├── globe.svg
-        ├── next.svg
-        ├── vercel.svg
-        ├── window.svg
+        ├── apple-touch-icon.png
+        ├── favicon.ico
+        ├── icon.png
     └── 📁src
         └── 📁app
             ├── favicon.ico
@@ -101,11 +106,11 @@ npm run dev
             └── 📁ui
                 ├── button.tsx
                 ├── command.tsx
-                ├── CommandPalette.tsx
                 ├── dialog.tsx
                 ├── popover.tsx
-                ├── Settings.tsx
                 ├── switch.tsx
+            ├── CommandPalette.tsx
+            ├── Settings.tsx
         └── 📁lib
             ├── utils.ts
     ├── .editorconfig
@@ -115,6 +120,7 @@ npm run dev
     ├── .mergify.yml
     ├── .prettierignore
     ├── CHANGELOG.md
+    ├── commitlint.config.cjs
     ├── components.json
     ├── eslint.config.mjs
     ├── LICENSE
