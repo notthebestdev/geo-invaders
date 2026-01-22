@@ -1,5 +1,19 @@
 # geo-invaders
 
+## 0.2.3
+
+### Patch Changes
+
+- [`a0032b2`](https://github.com/notthebestdev/geo-invaders/commit/a0032b28b53b85a5d1569cf8764abfad3cb58f35) - fix: add basePath for GitHub Pages PWA icon
+
+- [`ce36c2b`](https://github.com/notthebestdev/geo-invaders/commit/ce36c2b08e84a6737b17ee19ec1e4cc945d97781) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs(readme): add alt text for images
+
+- [`34c08e8`](https://github.com/notthebestdev/geo-invaders/commit/34c08e8217a499c084b8c2262f03a953678b2bd8) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs(readme): add line break for improved readability
+
+- [#80](https://github.com/notthebestdev/geo-invaders/pull/80) [`e584f8c`](https://github.com/notthebestdev/geo-invaders/commit/e584f8ca3199f2bac4bf1e0985082301db913245) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - chore(ci): add automated release tagging after changeset version bumps
+
+- [`954ce75`](https://github.com/notthebestdev/geo-invaders/commit/954ce751f641e52ec0b1b4dd30c029f768c71c58) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs(readme): add badges
+
 ## 0.2.2
 
 ### Patch Changes
