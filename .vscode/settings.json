@@ -1,0 +1,12 @@
+{
+    "draw.folder.structure.respectGitignore": true,
+    "draw.folder.structure.exclude": [
+        "**/node_modules",
+        "**/.git",
+        "**/out",
+        "**/.next",
+        "**/out",
+        "**/hooks",
+        "**/.husky"
+    ]
+}
