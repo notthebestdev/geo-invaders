@@ -8,7 +8,6 @@ import { resolve } from "path";
  */
 async function createGitHubRelease() {
   try {
-    // Get version from package.json
     const packageJson = JSON.parse(
       readFileSync(resolve(process.cwd(), "package.json"), "utf-8")
     );
@@ -38,7 +37,7 @@ async function createGitHubRelease() {
         repo,
         ref: `tags/${tagName}`,
       });
-      console.log(`⚠️  Tag ${tagName} already exists, skipping release creation`);
+      console.log(`⚠️ Tag ${tagName} already exists, skipping release creation`);
       return;
     } catch (error: unknown) {
       if (
@@ -60,7 +59,7 @@ async function createGitHubRelease() {
       owner,
       repo,
       tag_name: tagName,
-      name: `Release ${tagName}`,
+      name: `v${tagName}`,
       body: changelog,
       draft: false,
       prerelease: false,
@@ -107,13 +106,13 @@ function extractChangelog(version: string): string {
     const changelog = changelogLines.join("\n").trim();
 
     if (!changelog) {
-      console.warn(`⚠️  No changelog found for version ${version}`);
+      console.warn(`⚠️ No changelog found for version ${version}`);
       return `Release version ${version}`;
     }
 
     return changelog;
   } catch (error) {
-    console.warn("⚠️  Could not read CHANGELOG.md:", error);
+    console.warn("⚠️ Could not read CHANGELOG.md:", error);
     return `Release version ${version}`;
   }
 }
