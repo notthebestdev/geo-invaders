@@ -2,7 +2,7 @@
 
 /**
  * Sets up GitHub labels for PR auto-labeling workflow
- * Run with: node scripts/setup-labels.ts
+ * Run with: npx tsx scripts/setup-labels.ts
  * Requires GITHUB_TOKEN environment variable
  */
 
