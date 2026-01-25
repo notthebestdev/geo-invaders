@@ -5,8 +5,8 @@
  * that can be imported by the application.
  */
 
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
