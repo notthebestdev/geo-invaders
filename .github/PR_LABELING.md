@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD060 -->
 # PR Auto-Labeling
 
 This directory contains the configuration for automatically labeling pull requests based on the files that were changed.
