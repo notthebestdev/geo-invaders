@@ -8,6 +8,7 @@ import {
     PopoverContent,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import { APP_VERSION, SERVER_MODE } from "@/lib/version";
 
 interface SettingsProps {
     hideDamaged: boolean;
@@ -82,6 +83,12 @@ export function Settings({
                                 &quot;destroyed&quot; so you can focus on
                                 current, intact pieces.
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-border">
+                        <div className="text-xs text-muted-foreground text-center">
+                            v{APP_VERSION} • {SERVER_MODE === 'development' ? 'Development Server' : 'Production Server'}
                         </div>
                     </div>
                 </PopoverContent>

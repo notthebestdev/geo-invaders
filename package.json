@@ -3,7 +3,9 @@
     "version": "0.3.0",
     "private": true,
     "scripts": {
+        "predev": "node scripts/generate-version.js",
         "dev": "next dev --turbopack",
+        "prebuild": "node scripts/generate-version.js",
         "build": "next build",
         "start": "npx serve@latest out",
         "lint": "eslint .",
