@@ -14,7 +14,8 @@
         "version-packages": "npx @changesets/cli version",
         "release": "npm run build && npx @changesets/cli publish",
         "prepare": "husky",
-        "commitlint": "commitlint --edit"
+        "commitlint": "commitlint --edit",
+        "setup-labels": "npx tsx scripts/setup-labels.ts"
     },
     "dependencies": {
         "@radix-ui/react-dialog": "^1.1.15",
