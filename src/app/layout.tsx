@@ -13,8 +13,7 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-const basePath =
-    process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
+const basePath = process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
 
 export const metadata: Metadata = {
     title: "Geo Invaders",
