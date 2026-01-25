@@ -2,10 +2,11 @@
     "name": "geo-invaders",
     "version": "0.3.0",
     "private": true,
+    "type": "module",
     "scripts": {
-        "predev": "node scripts/generate-version.js",
+        "predev": "NODE_ENV=development node scripts/generate-version.ts",
         "dev": "next dev --turbopack",
-        "prebuild": "node scripts/generate-version.js",
+        "prebuild": "NODE_ENV=production node scripts/generate-version.ts",
         "build": "next build",
         "start": "npx serve@latest out",
         "lint": "eslint .",
