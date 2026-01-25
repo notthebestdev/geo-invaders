@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD060 -->
+
 # PR Auto-Labeling
 
 This directory contains the configuration for automatically labeling pull requests based on the files that were changed.
@@ -11,18 +12,18 @@ The workflow uses GitHub's official [labeler action](https://github.com/actions/
 
 The following labels are automatically applied based on file changes:
 
-| Label                  | Color   | Description                                  | Triggered by                          |
-| ---------------------- | ------- | -------------------------------------------- | ------------------------------------- |
-| `area: app`            | #FFD6E8 | Changes to the app directory                 | `src/app/**/*`                        |
-| `area: components`     | #C1E1FF | Changes to React components                  | `src/components/**/*` (except UI)     |
-| `area: ui`             | #D4C5F9 | Changes to UI components                     | `src/components/ui/**/*`              |
-| `area: lib`            | #FFEAA7 | Changes to library utilities                 | `src/lib/**/*`                        |
-| `area: workflows`      | #B2E6D4 | Changes to GitHub Actions workflows          | `.github/workflows/**/*`              |
-| `area: scripts`        | #FFE4B5 | Changes to build/utility scripts             | `scripts/**/*`                        |
-| `area: config`         | #E8DFF5 | Changes to configuration files               | Config files (*.config.*, tsconfig, etc.) |
-| `area: docs`           | #B2DFDB | Changes to documentation                     | `**/*.md`, `LICENSE`                  |
-| `area: dependencies`   | #FFE0B2 | Changes to package dependencies              | `package.json`, `package-lock.json`   |
-| `area: assets`         | #F8BBD0 | Changes to public assets                     | `public/**/*`                         |
+| Label                | Color   | Description                         | Triggered by                              |
+| -------------------- | ------- | ----------------------------------- | ----------------------------------------- |
+| `area: app`          | #FFD6E8 | Changes to the app directory        | `src/app/**/*`                            |
+| `area: components`   | #C1E1FF | Changes to React components         | `src/components/**/*` (except UI)         |
+| `area: ui`           | #D4C5F9 | Changes to UI components            | `src/components/ui/**/*`                  |
+| `area: lib`          | #FFEAA7 | Changes to library utilities        | `src/lib/**/*`                            |
+| `area: workflows`    | #B2E6D4 | Changes to GitHub Actions workflows | `.github/workflows/**/*`                  |
+| `area: scripts`      | #FFE4B5 | Changes to build/utility scripts    | `scripts/**/*`                            |
+| `area: config`       | #E8DFF5 | Changes to configuration files      | Config files (_.config._, tsconfig, etc.) |
+| `area: docs`         | #B2DFDB | Changes to documentation            | `**/*.md`, `LICENSE`                      |
+| `area: dependencies` | #FFE0B2 | Changes to package dependencies     | `package.json`, `package-lock.json`       |
+| `area: assets`       | #F8BBD0 | Changes to public assets            | `public/**/*`                             |
 
 All labels use pastel colors for better visual organization and readability.
 

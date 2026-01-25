@@ -6,7 +6,7 @@
  * Requires GITHUB_TOKEN environment variable
  */
 
-import { Octokit } from "@octokit/rest";
+const { Octokit } = require("octokit");
 
 const owner = "notthebestdev";
 const repo = "geo-invaders";
@@ -103,7 +103,9 @@ async function setupLabels() {
                             color: label.color,
                             description: label.description,
                         });
-                        console.log(`✓ Created: ${label.name} (#${label.color})`);
+                        console.log(
+                            `✓ Created: ${label.name} (#${label.color})`,
+                        );
                     } catch (createError) {
                         console.error(
                             `✗ Failed to create ${label.name}:`,
