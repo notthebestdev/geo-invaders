@@ -1,9 +1,12 @@
 {
     "name": "geo-invaders",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "private": true,
+    "type": "module",
     "scripts": {
+        "predev": "NODE_ENV=development node scripts/generate-version.ts",
         "dev": "next dev --turbopack",
+        "prebuild": "NODE_ENV=production node scripts/generate-version.ts",
         "build": "next build",
         "start": "npx serve@latest out",
         "lint": "eslint .",
@@ -11,7 +14,8 @@
         "version-packages": "npx @changesets/cli version",
         "release": "npm run build && npx @changesets/cli publish",
         "prepare": "husky",
-        "commitlint": "commitlint --edit"
+        "commitlint": "commitlint --edit",
+        "setup-labels": "npx tsx scripts/setup-labels.ts"
     },
     "dependencies": {
         "@radix-ui/react-dialog": "^1.1.15",
@@ -42,7 +46,7 @@
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "@typescript-eslint/eslint-plugin": "^8.47.0",
-        "baseline-browser-mapping": "^2.9.13",
+        "baseline-browser-mapping": "^2.9.17",
         "eslint": "^9.39.2",
         "eslint-config-next": "^16.1.4",
         "eslint-plugin-react": "^7.37.5",

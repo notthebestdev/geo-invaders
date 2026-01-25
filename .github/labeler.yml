@@ -1,0 +1,63 @@
+# Auto-labeling configuration for PRs based on changed files
+
+"area: app":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "src/app/**/*"
+
+"area: components":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "src/components/**/*"
+          - all-globs-to-all-files:
+                - "!src/components/ui/**/*"
+
+"area: ui":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "src/components/ui/**/*"
+
+"area: lib":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "src/lib/**/*"
+
+"area: workflows":
+    - changed-files:
+          - any-glob-to-any-file:
+                - ".github/workflows/**/*"
+
+"area: scripts":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "scripts/**/*"
+
+"area: config":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "*.config.*"
+                - "tsconfig.json"
+                - ".eslintrc*"
+                - ".prettierrc*"
+                - ".prettierignore"
+                - ".editorconfig"
+                - ".markdownlint.json"
+                - "commitlint.config.*"
+                - "components.json"
+
+"area: docs":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "**/*.md"
+                - "LICENSE"
+
+"area: dependencies":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "package.json"
+                - "package-lock.json"
+
+"area: assets":
+    - changed-files:
+          - any-glob-to-any-file:
+                - "public/**/*"

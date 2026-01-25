@@ -1,5 +1,36 @@
 # geo-invaders
 
+## 0.4.0
+
+### Minor Changes
+
+- [#94](https://github.com/notthebestdev/geo-invaders/pull/94) [`819d7af`](https://github.com/notthebestdev/geo-invaders/commit/819d7af5fe0985186a89a353e87e68037363507a) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - feat: add version and server mode display to settings menu
+
+### Patch Changes
+
+- [`3cbf161`](https://github.com/notthebestdev/geo-invaders/commit/3cbf1613bc7ffb9e4e1584e14349ab00ce4471d0) Thanks [@notthebestdev](https://github.com/notthebestdev)! - chore(prettier): ignore CHANGELOG.md in formatting
+
+- [#92](https://github.com/notthebestdev/geo-invaders/pull/92) [`4bad999`](https://github.com/notthebestdev/geo-invaders/commit/4bad999574361e60dfd203dedf2a86b7e8aac7d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump baseline-browser-mapping from 2.9.13 to 2.9.17
+
+  Bumps [baseline-browser-mapping](https://github.com/web-platform-dx/baseline-browser-mapping) from 2.9.13 to 2.9.17.
+  - [Release notes](https://github.com/web-platform-dx/baseline-browser-mapping/releases)
+  - [Commits](https://github.com/web-platform-dx/baseline-browser-mapping/compare/v2.9.13...v2.9.17)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: baseline-browser-mapping
+    dependency-version: 2.9.17
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [`439375c`](https://github.com/notthebestdev/geo-invaders/commit/439375cec8fa76bdd39ad37ea914da7f1c3f95f0) Thanks [@notthebestdev](https://github.com/notthebestdev)! - refactor: update server mode display in settings
+
+- [#95](https://github.com/notthebestdev/geo-invaders/pull/95) [`292dfca`](https://github.com/notthebestdev/geo-invaders/commit/292dfca30e87ffd49d637f2470857b77bfd981fc) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - feat(workflows): add automatic PR labeling based on changed files
+
 ## 0.3.0
 
 ### Minor Changes
