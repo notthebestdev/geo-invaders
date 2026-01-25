@@ -88,7 +88,10 @@ export function Settings({
 
                     <div className="mt-4 pt-3 border-t border-border">
                         <div className="text-xs text-muted-foreground text-center">
-                            v{APP_VERSION} • {SERVER_MODE === 'development' ? 'Development Server' : 'Production Server'}
+                            v{APP_VERSION} •{" "}
+                            {SERVER_MODE === "development"
+                                ? "Development Server"
+                                : "Production Server"}
                         </div>
                     </div>
                 </PopoverContent>
