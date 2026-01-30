@@ -28,7 +28,7 @@
         "lucide-react": "^0.562.0",
         "maplibre-gl": "^5.16.0",
         "next": "16.1.5",
-        "react": "19.2.3",
+        "react": "19.2.4",
         "react-dom": "19.2.3",
         "simple-icons": "^16.6.0",
         "tailwind-merge": "^3.4.0"
