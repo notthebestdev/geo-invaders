@@ -55,6 +55,8 @@ jobs:
     build:
         runs-on: ubuntu-latest
         needs: lint
+        # Only run if workflow was triggered by push/workflow_dispatch, or if workflow_run concluded successfully
+        if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v6
