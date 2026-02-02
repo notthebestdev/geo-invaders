@@ -107,7 +107,7 @@ export default function Home() {
         });
 
         fetch(
-            "https://corsproxy.io/?url=https://pnote.eu/projects/invaders/map/invaders.json",
+            "https://corsmirror.com/v1?url=https://pnote.eu/projects/invaders/map/invaders.json",
         )
             .then((res) => res.json())
             .then((data) => {
