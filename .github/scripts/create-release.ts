@@ -54,6 +54,13 @@ async function createGitHubRelease() {
             // Trigger the deployment workflow via repository_dispatch
             console.log(`\n🔔 Triggering deployment workflow...`);
             try {
+                // Validate GITHUB_TOKEN is available
+                if (!process.env.GITHUB_TOKEN) {
+                    throw new Error(
+                        "GITHUB_TOKEN is required to trigger deployment workflow",
+                    );
+                }
+
                 const dispatchOctokit = new Octokit({
                     auth: process.env.GITHUB_TOKEN,
                 });
@@ -69,8 +76,12 @@ async function createGitHubRelease() {
                 });
                 console.log(`✅ Deployment workflow triggered successfully`);
             } catch (dispatchError) {
+                const errorMessage =
+                    dispatchError instanceof Error
+                        ? dispatchError.message
+                        : String(dispatchError);
                 console.warn(
-                    `⚠️ Failed to trigger deployment workflow: ${dispatchError}`,
+                    `⚠️ Failed to trigger deployment workflow: ${errorMessage}`,
                 );
                 console.log(
                     "You can manually trigger the deployment from the Actions tab",
