@@ -136,13 +136,32 @@ npm run dev
 
 ## 📦 Build & Deploy
 
-Build for production:
+### Production Build (for GitHub Pages)
+
+Build for production deployment:
 
 ```bash
 npm run build
 ```
 
-The app is automatically deployed to GitHub Pages on every push to the `main` branch.
+This creates an optimized static export in the `out` directory with the `/geo-invaders` base path configured for GitHub Pages.
+
+### Local Testing Build
+
+To build and test the production build locally:
+
+```bash
+npm run build:local
+npm run start
+```
+
+The `build:local` script creates a build without the GitHub Pages base path, making it suitable for local testing at `http://localhost:3000`.
+
+**Note:** Don't use `npm run build` followed by `npm run start` for local testing, as the production build includes the `/geo-invaders` base path and won't work correctly on localhost.
+
+### Deployment
+
+The app is automatically deployed to GitHub Pages on every push to the `prod` branch.
 
 ## 🤝 Contributing
 
