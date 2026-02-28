@@ -16,10 +16,10 @@ jobs:
 
         steps:
             - name: Update PR
-              uses: mscharley/dependency-changesets-action@v1.2.2
+              uses: mscharley/dependency-changesets-action@v1.2.3
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  use-conventional-commits: false
+                  use-conventional-commits: true
                   commit-message: "chore(deps): changeset for dependency update"
                   author-name: github-actions[bot]
                   author-email: github-actions[bot]@users.noreply.github.com
