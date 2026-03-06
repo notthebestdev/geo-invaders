@@ -38,7 +38,7 @@
         "@changesets/cli": "^2.30.0",
         "@commitlint/cli": "^20.4.2",
         "@commitlint/config-conventional": "^20.4.2",
-        "@commitlint/prompt-cli": "^20.4.1",
+        "@commitlint/prompt-cli": "^20.4.3",
         "@eslint/eslintrc": "^3",
         "@octokit/rest": "^22.0.1",
         "@tailwindcss/postcss": "^4",
