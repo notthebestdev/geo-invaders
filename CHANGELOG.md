@@ -1,5 +1,222 @@
 # geo-invaders
 
+## 0.5.0
+
+### Minor Changes
+
+- [#106](https://github.com/notthebestdev/geo-invaders/pull/106) [`96529d2`](https://github.com/notthebestdev/geo-invaders/commit/96529d2dc61bafdfc6e99070f27efbdfbfec5a8d) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Fix build failures from module format mismatch, missing workflow trigger, and local testing issues
+
+### Patch Changes
+
+- [#100](https://github.com/notthebestdev/geo-invaders/pull/100) [`79d132c`](https://github.com/notthebestdev/geo-invaders/commit/79d132c5edfd50c5e3191ebc67ad72299c591b45) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump react-dom from 19.2.3 to 19.2.4
+
+  Bumps [react-dom](https://github.com/facebook/react/tree/HEAD/packages/react-dom) from 19.2.3 to 19.2.4.
+  - [Release notes](https://github.com/facebook/react/releases)
+  - [Changelog](https://github.com/facebook/react/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/facebook/react/commits/v19.2.4/packages/react-dom)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: react-dom
+    dependency-version: 19.2.4
+    dependency-type: direct:production
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#101](https://github.com/notthebestdev/geo-invaders/pull/101) [`e47d137`](https://github.com/notthebestdev/geo-invaders/commit/e47d137de6ddefaa084397842932f7261c2b424b) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump maplibre-gl from 5.16.0 to 5.17.0
+
+  Bumps [maplibre-gl](https://github.com/maplibre/maplibre-gl-js) from 5.16.0 to 5.17.0.
+  - [Release notes](https://github.com/maplibre/maplibre-gl-js/releases)
+  - [Changelog](https://github.com/maplibre/maplibre-gl-js/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/maplibre/maplibre-gl-js/compare/v5.16.0...v5.17.0)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: maplibre-gl
+    dependency-version: 5.17.0
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#102](https://github.com/notthebestdev/geo-invaders/pull/102) [`e3266f0`](https://github.com/notthebestdev/geo-invaders/commit/e3266f056e51c4b57fb66d1fc5c39ee2189a5821) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump baseline-browser-mapping from 2.9.17 to 2.9.19
+
+  Bumps [baseline-browser-mapping](https://github.com/web-platform-dx/baseline-browser-mapping) from 2.9.17 to 2.9.19.
+  - [Release notes](https://github.com/web-platform-dx/baseline-browser-mapping/releases)
+  - [Commits](https://github.com/web-platform-dx/baseline-browser-mapping/compare/v2.9.17...v2.9.19)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: baseline-browser-mapping
+    dependency-version: 2.9.19
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#103](https://github.com/notthebestdev/geo-invaders/pull/103) [`79979c4`](https://github.com/notthebestdev/geo-invaders/commit/79979c43ea8c95149fe04ea35e70cb64c76957d7) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump eslint-config-next from 16.1.4 to 16.1.6
+
+  Bumps [eslint-config-next](https://github.com/vercel/next.js/tree/HEAD/packages/eslint-config-next) from 16.1.4 to 16.1.6.
+  - [Release notes](https://github.com/vercel/next.js/releases)
+  - [Changelog](https://github.com/vercel/next.js/blob/canary/release.js)
+  - [Commits](https://github.com/vercel/next.js/commits/v16.1.6/packages/eslint-config-next)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: eslint-config-next
+    dependency-version: 16.1.6
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#104](https://github.com/notthebestdev/geo-invaders/pull/104) [`49abb7e`](https://github.com/notthebestdev/geo-invaders/commit/49abb7ea9fc2c5ca8c6ae52da950f4f47e5ee71d) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump lucide-react from 0.562.0 to 0.563.0
+
+  Bumps [lucide-react](https://github.com/lucide-icons/lucide/tree/HEAD/packages/lucide-react) from 0.562.0 to 0.563.0.
+  - [Release notes](https://github.com/lucide-icons/lucide/releases)
+  - [Commits](https://github.com/lucide-icons/lucide/commits/0.563.0/packages/lucide-react)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: lucide-react
+    dependency-version: 0.563.0
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#108](https://github.com/notthebestdev/geo-invaders/pull/108) [`64a40a4`](https://github.com/notthebestdev/geo-invaders/commit/64a40a4380789e345aeaef72861dc3f33e564a37) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump next from 16.1.5 to 16.1.6
+
+  Bumps [next](https://github.com/vercel/next.js) from 16.1.5 to 16.1.6.
+  - [Release notes](https://github.com/vercel/next.js/releases)
+  - [Changelog](https://github.com/vercel/next.js/blob/canary/release.js)
+  - [Commits](https://github.com/vercel/next.js/compare/v16.1.5...v16.1.6)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: next
+    dependency-version: 16.1.6
+    dependency-type: direct:production
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#109](https://github.com/notthebestdev/geo-invaders/pull/109) [`8d6afb5`](https://github.com/notthebestdev/geo-invaders/commit/8d6afb5cd5ad25a78f5abdb02c365aac66a94c09) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/config-conventional from 20.3.1 to 20.4.1
+
+  Bumps [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/config-conventional) from 20.3.1 to 20.4.1.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.4.1/@commitlint/config-conventional)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/config-conventional"
+    dependency-version: 20.4.1
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#110](https://github.com/notthebestdev/geo-invaders/pull/110) [`420b9b1`](https://github.com/notthebestdev/geo-invaders/commit/420b9b15e36e9943532c5548b5e5a0e38c396496) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump @commitlint/cli from 20.3.1 to 20.4.1
+
+  Bumps [@commitlint/cli](https://github.com/conventional-changelog/commitlint/tree/HEAD/@commitlint/cli) from 20.3.1 to 20.4.1.
+  - [Release notes](https://github.com/conventional-changelog/commitlint/releases)
+  - [Changelog](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/cli/CHANGELOG.md)
+  - [Commits](https://github.com/conventional-changelog/commitlint/commits/v20.4.1/@commitlint/cli)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: "@commitlint/cli"
+    dependency-version: 20.4.1
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#96](https://github.com/notthebestdev/geo-invaders/pull/96) [`be5d0e7`](https://github.com/notthebestdev/geo-invaders/commit/be5d0e7c445f4de4697cd1c6a32ea2ca78c549c5) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump next in the npm_and_yarn group across 1 directory
+
+  Bumps the npm_and_yarn group with 1 update in the / directory: [next](https://github.com/vercel/next.js).
+
+  Updates `next` from 16.1.4 to 16.1.5
+  - [Release notes](https://github.com/vercel/next.js/releases)
+  - [Changelog](https://github.com/vercel/next.js/blob/canary/release.js)
+  - [Commits](https://github.com/vercel/next.js/compare/v16.1.4...v16.1.5)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: next
+    dependency-version: 16.1.5
+    dependency-type: direct:production
+    dependency-group: npm_and_yarn
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#98](https://github.com/notthebestdev/geo-invaders/pull/98) [`ce16138`](https://github.com/notthebestdev/geo-invaders/commit/ce16138b302e7bde28f96e186fd07cc7ca3be918) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump react and @types/react
+
+  Bumps [react](https://github.com/facebook/react/tree/HEAD/packages/react) and [@types/react](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/react). These dependencies needed to be updated together.
+
+  Updates `react` from 19.2.3 to 19.2.4
+  - [Release notes](https://github.com/facebook/react/releases)
+  - [Changelog](https://github.com/facebook/react/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/facebook/react/commits/v19.2.4/packages/react)
+
+  Updates `@types/react` from 19.2.9 to 19.2.10
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Commits](https://github.com/DefinitelyTyped/DefinitelyTyped/commits/HEAD/types/react)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: react
+    dependency-version: 19.2.4
+    dependency-type: direct:production
+    update-type: version-update:semver-patch
+  - dependency-name: "@types/react"
+    dependency-version: 19.2.10
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#99](https://github.com/notthebestdev/geo-invaders/pull/99) [`2a7e243`](https://github.com/notthebestdev/geo-invaders/commit/2a7e24389d0b45398bce3805ddc024ac721ed5fb) Thanks [@dependabot](https://github.com/apps/dependabot)! - :arrow_up: Bump simple-icons from 16.6.0 to 16.6.1
+
+  Bumps [simple-icons](https://github.com/simple-icons/simple-icons) from 16.6.0 to 16.6.1.
+  - [Release notes](https://github.com/simple-icons/simple-icons/releases)
+  - [Commits](https://github.com/simple-icons/simple-icons/compare/16.6.0...16.6.1)
+
+  ***
+
+  updated-dependencies:
+  - dependency-name: simple-icons
+    dependency-version: 16.6.1
+    dependency-type: direct:production
+    update-type: version-update:semver-patch
+    ...
+
+  Signed-off-by: dependabot[bot] <support@github.com>
+
+- [#112](https://github.com/notthebestdev/geo-invaders/pull/112) [`28d7565`](https://github.com/notthebestdev/geo-invaders/commit/28d75652afb0a65d1a0809b4edb0499c58577157) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - chore(workflows): configure dependabot with auto-labels and conventional commits
+
 ## 0.4.0
 
 ### Minor Changes
