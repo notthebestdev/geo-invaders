@@ -50,6 +50,43 @@ async function createGitHubRelease() {
             console.log(`\n🚀 Pushing changes...`);
             execSync("git push origin prod", { stdio: "inherit" });
             console.log(`✅ Successfully pushed changes`);
+
+            // Trigger the deployment workflow via repository_dispatch
+            console.log(`\n🔔 Triggering deployment workflow...`);
+            try {
+                // Validate GITHUB_TOKEN is available
+                if (!process.env.GITHUB_TOKEN) {
+                    throw new Error(
+                        "GITHUB_TOKEN is required to trigger deployment workflow",
+                    );
+                }
+
+                const dispatchOctokit = new Octokit({
+                    auth: process.env.GITHUB_TOKEN,
+                });
+
+                await dispatchOctokit.rest.repos.createDispatchEvent({
+                    owner,
+                    repo,
+                    event_type: "deploy-to-pages",
+                    client_payload: {
+                        source: "release-workflow",
+                        branch: "prod",
+                    },
+                });
+                console.log(`✅ Deployment workflow triggered successfully`);
+            } catch (dispatchError) {
+                const errorMessage =
+                    dispatchError instanceof Error
+                        ? dispatchError.message
+                        : String(dispatchError);
+                console.warn(
+                    `⚠️ Failed to trigger deployment workflow: ${errorMessage}`,
+                );
+                console.log(
+                    "You can manually trigger the deployment from the Actions tab",
+                );
+            }
         } catch (gitError) {
             console.error("❌ Git operation failed:", gitError);
             process.exit(1);

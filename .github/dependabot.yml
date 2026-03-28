@@ -11,7 +11,11 @@ updates:
           interval: "weekly"
       ignore:
           - dependency-name: "@typescript-eslint/eslint-plugin"
+      labels:
+          - "area: dependencies"
     - package-ecosystem: "github-actions"
       directory: "/"
       schedule:
           interval: "weekly"
+      labels:
+          - "area: dependencies"
