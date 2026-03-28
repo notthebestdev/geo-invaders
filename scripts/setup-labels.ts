@@ -6,7 +6,7 @@
  * Requires GITHUB_TOKEN environment variable
  */
 
-const { Octokit } = require("octokit");
+import { Octokit } from "octokit";
 
 const owner = "notthebestdev";
 const repo = "geo-invaders";
