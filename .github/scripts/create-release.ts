@@ -51,13 +51,13 @@ async function createGitHubRelease() {
             execSync("git push origin prod", { stdio: "inherit" });
             console.log(`✅ Successfully pushed changes`);
 
-            // Trigger the deployment workflow via repository_dispatch
-            console.log(`\n🔔 Triggering deployment workflow...`);
+            // Trigger deployment workflow on prod so environment branch rules are respected
+            console.log(`\n🔔 Triggering deployment workflow on prod...`);
             try {
                 // Validate GITHUB_TOKEN is available
                 if (!process.env.GITHUB_TOKEN) {
                     throw new Error(
-                        "GITHUB_TOKEN is required to trigger deployment workflow",
+                        "GITHUB_TOKEN is required to trigger the deployment workflow",
                     );
                 }
 
@@ -65,14 +65,11 @@ async function createGitHubRelease() {
                     auth: process.env.GITHUB_TOKEN,
                 });
 
-                await dispatchOctokit.rest.repos.createDispatchEvent({
+                await dispatchOctokit.rest.actions.createWorkflowDispatch({
                     owner,
                     repo,
-                    event_type: "deploy-to-pages",
-                    client_payload: {
-                        source: "release-workflow",
-                        branch: "prod",
-                    },
+                    workflow_id: "nextjs.yml",
+                    ref: "prod",
                 });
                 console.log(`✅ Deployment workflow triggered successfully`);
             } catch (dispatchError) {
