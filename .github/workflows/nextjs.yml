@@ -99,6 +99,10 @@ jobs:
                       ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
             - name: Install dependencies
               run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+              
+            - name: Generate version file
+              run: NODE_ENV=production npx tsx scripts/generate-version.ts
+
             - name: Build with Next.js
               env:
                   NEXT_PUBLIC_MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
