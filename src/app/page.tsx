@@ -28,11 +28,16 @@ export default function Home() {
         if ("serviceWorker" in navigator) {
             const basePath =
                 process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
-            navigator.serviceWorker.register(`${basePath}/sw.js`).catch((err) => {
-                if (process.env.NODE_ENV !== "production") {
-                    console.error("Service Worker registration failed:", err);
-                }
-            });
+            navigator.serviceWorker
+                .register(`${basePath}/sw.js`)
+                .catch((err) => {
+                    if (process.env.NODE_ENV !== "production") {
+                        console.error(
+                            "Service Worker registration failed:",
+                            err,
+                        );
+                    }
+                });
         }
     }, []);
 
