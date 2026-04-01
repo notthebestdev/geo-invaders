@@ -24,6 +24,18 @@ export default function Home() {
     const [hideDamaged, setHideDamaged] = useState(false);
     const [hideDestroyed, setHideDestroyed] = useState(false);
 
+    useEffect(() => {
+        if ("serviceWorker" in navigator) {
+            const basePath =
+                process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
+            navigator.serviceWorker.register(`${basePath}/sw.js`).catch((err) => {
+                if (process.env.NODE_ENV !== "production") {
+                    console.error("Service Worker registration failed:", err);
+                }
+            });
+        }
+    }, []);
+
     // Store map instance and source for updates
     const mapRef = useRef<maplibregl.Map | null>(null);
     const geojsonRef = useRef<
