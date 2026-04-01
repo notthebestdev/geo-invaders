@@ -13,15 +13,60 @@ import { LocateFixed } from "lucide-react";
 import Image from "next/image";
 
 const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
+const LAST_VIEW_STORAGE_KEY = "geo-invaders:last-view";
+
+type MapView = { lng: number; lat: number; zoom: number };
+
+function isValidMapView(view: Partial<MapView>): view is MapView {
+    const { lng, lat, zoom } = view;
+
+    return (
+        typeof lng === "number" &&
+        typeof lat === "number" &&
+        typeof zoom === "number" &&
+        Number.isFinite(lng) &&
+        Number.isFinite(lat) &&
+        Number.isFinite(zoom) &&
+        Math.abs(lng) <= 180 &&
+        Math.abs(lat) <= 90 &&
+        zoom >= 0 &&
+        zoom <= 22
+    );
+}
 
 function getInitialView() {
     if (typeof window === "undefined")
         return { lng: 2.3522, lat: 48.8566, zoom: 10 };
+
     const params = new URLSearchParams(window.location.search);
-    const lng = parseFloat(params.get("lng") || "2.3522");
-    const lat = parseFloat(params.get("lat") || "48.8566");
-    const zoom = parseFloat(params.get("zoom") || "10");
-    return { lng, lat, zoom };
+    const lngParam = params.get("lng");
+    const latParam = params.get("lat");
+    const zoomParam = params.get("zoom");
+
+    if (lngParam && latParam && zoomParam) {
+        const fromUrl = {
+            lng: parseFloat(lngParam),
+            lat: parseFloat(latParam),
+            zoom: parseFloat(zoomParam),
+        };
+        if (isValidMapView(fromUrl)) {
+            return fromUrl;
+        }
+    }
+
+    try {
+        const rawSaved = window.localStorage.getItem(LAST_VIEW_STORAGE_KEY);
+        if (rawSaved) {
+            const parsed = JSON.parse(rawSaved) as Partial<MapView>;
+            if (isValidMapView(parsed)) {
+                return parsed;
+            }
+        }
+    } catch {
+        // Ignore storage/JSON failures and continue with defaults.
+    }
+
+    return { lng: 2.3522, lat: 48.8566, zoom: 10 };
 }
 
 function getMapStyleUrl(isDark: boolean, apiKey: string): string {
@@ -196,6 +241,11 @@ export default function Home() {
         map.on("moveend", () => {
             const center = map.getCenter();
             const zoom = map.getZoom();
+            const view: MapView = {
+                lng: center.lng,
+                lat: center.lat,
+                zoom,
+            };
             const params = new URLSearchParams(window.location.search);
             params.set("lng", center.lng.toFixed(5));
             params.set("lat", center.lat.toFixed(5));
@@ -205,6 +255,15 @@ export default function Home() {
                 "",
                 `${window.location.pathname}?${params.toString()}`,
             );
+
+            try {
+                window.localStorage.setItem(
+                    LAST_VIEW_STORAGE_KEY,
+                    JSON.stringify(view),
+                );
+            } catch {
+                // Ignore storage failures in private/incognito contexts.
+            }
         });
 
         fetch(

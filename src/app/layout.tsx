@@ -17,8 +17,18 @@ const geistMono = Geist_Mono({
 const basePath = process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
 
 export const metadata: Metadata = {
+    applicationName: "Geo Invaders",
     title: "Geo Invaders",
     description: "An interactive map for the game Flash Invaders",
+    manifest: `${basePath}/manifest.webmanifest`,
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: "default",
+        title: "Geo Invaders",
+    },
+    formatDetection: {
+        telephone: false,
+    },
     keywords: [
         "Geo Invaders",
         "Flash Invaders",
@@ -69,6 +79,7 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
+    themeColor: "#0b1220",
 };
 
 export default function RootLayout({
