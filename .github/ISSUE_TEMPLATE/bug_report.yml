@@ -4,7 +4,6 @@ title: "[Bug]: "
 labels: ["bug"]
 assignees:
     - notthebestdev
-type: bug
 body:
     - type: markdown
       attributes:
