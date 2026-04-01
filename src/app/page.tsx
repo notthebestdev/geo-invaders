@@ -7,6 +7,7 @@ import maplibregl from "maplibre-gl";
 import { CommandPalette } from "@/components/CommandPalette";
 import { Settings } from "@/components/Settings";
 import { siInstagram } from "simple-icons";
+import { LocateFixed } from "lucide-react";
 
 const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
 
@@ -29,6 +30,7 @@ export default function Home() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const [hideDamaged, setHideDamaged] = useState(false);
     const [hideDestroyed, setHideDestroyed] = useState(false);
+    const [isLocating, setIsLocating] = useState(false);
     const { theme, setTheme } = useTheme();
 
     useEffect(() => {
@@ -366,6 +368,39 @@ export default function Home() {
         }
     };
 
+    const handleLocateMe = () => {
+        if (typeof window === "undefined" || !navigator.geolocation) return;
+
+        setIsLocating(true);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const map = mapRef.current;
+                if (!map) {
+                    setIsLocating(false);
+                    return;
+                }
+
+                map.flyTo({
+                    center: [
+                        position.coords.longitude,
+                        position.coords.latitude,
+                    ],
+                    zoom: Math.max(map.getZoom(), 15),
+                    essential: true,
+                });
+                setIsLocating(false);
+            },
+            () => {
+                setIsLocating(false);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            },
+        );
+    };
+
     return (
         <>
             <div
@@ -396,6 +431,36 @@ export default function Home() {
                 onHideDestroyedChange={setHideDestroyed}
                 onDarkModeChange={handleDarkModeChange}
             />
+
+            <button
+                id="locate"
+                type="button"
+                onClick={handleLocateMe}
+                disabled={isLocating}
+                aria-label="Center map on my location"
+                title="Center map on my location"
+                style={{
+                    position: "fixed",
+                    right: 16,
+                    bottom: 72,
+                    zIndex: 30,
+                    border: "1px solid rgba(255, 255, 255, 0.45)",
+                    background: "rgba(255, 255, 255, 0.88)",
+                    color: "#0f172a",
+                    borderRadius: "50%",
+                    width: 44,
+                    height: 44,
+                    display: "grid",
+                    placeItems: "center",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.16)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    cursor: isLocating ? "wait" : "pointer",
+                    opacity: isLocating ? 0.8 : 1,
+                }}
+            >
+                <LocateFixed size={18} />
+            </button>
 
             <CommandPalette
                 geojsonRef={geojsonRef}
