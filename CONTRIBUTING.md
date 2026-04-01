@@ -15,36 +15,36 @@ Thank you for your interest in contributing to Geo Invaders! We welcome contribu
 1. Fork the repository on GitHub
 2. Clone your fork locally:
 
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/geo-invaders.git
-   cd geo-invaders
-   ```
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/geo-invaders.git
+    cd geo-invaders
+    ```
 
 3. Add the upstream repository:
 
-   ```bash
-   git remote add upstream https://github.com/notthebestdev/geo-invaders.git
-   ```
+    ```bash
+    git remote add upstream https://github.com/notthebestdev/geo-invaders.git
+    ```
 
 4. Install dependencies:
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 5. Create a `.env` file from `.env.example`:
 
-   ```bash
-   cp .env.example .env
-   ```
+    ```bash
+    cp .env.example .env
+    ```
 
-   Add your MapTiler API key to the `.env` file
+    Add your MapTiler API key to the `.env` file
 
 6. Start the development server:
 
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm run dev
+    ```
 
 Visit `http://localhost:3000` to see your local instance
 
@@ -64,15 +64,15 @@ Use descriptive branch names (e.g., `feature/dark-mode`, `fix/popup-styling`, `d
 2. Test your changes locally (`npm run dev`)
 3. Lint your code:
 
-   ```bash
-   npm run lint
-   ```
+    ```bash
+    npm run lint
+    ```
 
 4. Fix any ESLint issues automatically:
 
-   ```bash
-   npm run lint -- --fix
-   ```
+    ```bash
+    npm run lint -- --fix
+    ```
 
 ### Committing Changes
 
@@ -99,22 +99,22 @@ git commit -m "docs: update README with dark mode info"
 
 1. Keep your branch up to date with upstream:
 
-   ```bash
-   git fetch upstream
-   git rebase upstream/dev
-   ```
+    ```bash
+    git fetch upstream
+    git rebase upstream/dev
+    ```
 
 2. Push to your fork:
 
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+    ```bash
+    git push origin feature/your-feature-name
+    ```
 
 3. Create a Pull Request on GitHub with:
-   - Clear title describing your changes
-   - Description of what was changed and why
-   - Reference to any related issues (`Closes #123`)
-   - Screenshots for UI changes
+    - Clear title describing your changes
+    - Description of what was changed and why
+    - Reference to any related issues (`Closes #123`)
+    - Screenshots for UI changes
 
 ## Code Style
 
@@ -194,9 +194,9 @@ We use semantic versioning and changesets. When making changes:
 
 1. Create or update a changeset:
 
-   ```bash
-   npm run changeset
-   ```
+    ```bash
+    npm run changeset
+    ```
 
 2. Follow the prompts to document your changes
 

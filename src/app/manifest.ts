@@ -8,7 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     return {
         name: "Geo Invaders",
         short_name: "GeoInvaders",
-        description: "An interactive map for exploring Flash Invaders street art.",
+        description:
+            "An interactive map for exploring Flash Invaders street art.",
         start_url: `${basePath}/`,
         scope: `${basePath}/`,
         display: "standalone",
