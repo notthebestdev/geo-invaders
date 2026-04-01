@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
@@ -19,10 +20,16 @@ function getInitialView() {
     return { lng, lat, zoom };
 }
 
+function getMapStyleUrl(isDark: boolean, apiKey: string): string {
+    const style = isDark ? "streets-v4-dark" : "streets-v4";
+    return `https://api.maptiler.com/maps/${style}/style.json?key=${apiKey}`;
+}
+
 export default function Home() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const [hideDamaged, setHideDamaged] = useState(false);
     const [hideDestroyed, setHideDestroyed] = useState(false);
+    const { theme, setTheme } = useTheme();
 
     useEffect(() => {
         if ("serviceWorker" in navigator) {
@@ -96,13 +103,16 @@ export default function Home() {
     };
 
     useEffect(() => {
-        if (!mapContainer.current) return;
+        if (!mapContainer.current || !theme) return;
 
         const initialView = getInitialView();
 
         const map = new maplibregl.Map({
             container: mapContainer.current,
-            style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}`,
+            style: getMapStyleUrl(
+                theme === "dark",
+                process.env.NEXT_PUBLIC_MAPTILER_KEY!,
+            ),
             center: [initialView.lng, initialView.lat],
             zoom: initialView.zoom,
         });
@@ -311,7 +321,7 @@ export default function Home() {
             map.remove();
             mapRef.current = null;
         };
-    }, [hideDamaged, hideDestroyed]);
+    }, [hideDamaged, hideDestroyed, theme]);
 
     // Update invaders source when toggles change
     useEffect(() => {
@@ -345,14 +355,19 @@ export default function Home() {
         source.setData(filteredGeoJSON);
     }, [hideDamaged, hideDestroyed]);
 
+    // Handle dark mode toggle
+    const handleDarkModeChange = (enabled: boolean) => {
+        setTheme(enabled ? "dark" : "light");
+        const map = mapRef.current;
+        if (map && map.isStyleLoaded()) {
+            map.setStyle(
+                getMapStyleUrl(enabled, process.env.NEXT_PUBLIC_MAPTILER_KEY!),
+            );
+        }
+    };
+
     return (
         <>
-            <head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-                />
-            </head>
             <div
                 style={{
                     position: "fixed",
@@ -376,8 +391,10 @@ export default function Home() {
             <Settings
                 hideDamaged={hideDamaged}
                 hideDestroyed={hideDestroyed}
+                isDarkMode={theme === "dark"}
                 onHideDamagedChange={setHideDamaged}
                 onHideDestroyedChange={setHideDestroyed}
+                onDarkModeChange={handleDarkModeChange}
             />
 
             <CommandPalette
