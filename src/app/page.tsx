@@ -3,13 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
+import { createRoot } from "react-dom/client";
 
 import { CommandPalette } from "@/components/CommandPalette";
 import { Settings } from "@/components/Settings";
+import { Skeleton } from "@/components/ui/skeleton";
 import { siInstagram } from "simple-icons";
 import { LocateFixed } from "lucide-react";
+import Image from "next/image";
 
-const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
+const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
 
 function getInitialView() {
     if (typeof window === "undefined")
@@ -24,6 +27,68 @@ function getInitialView() {
 function getMapStyleUrl(isDark: boolean, apiKey: string): string {
     const style = isDark ? "streets-v4-dark" : "streets-v4";
     return `https://api.maptiler.com/maps/${style}/style.json?key=${apiKey}`;
+}
+
+function InvaderPopupContent({
+    id,
+    instagramUrl,
+    githubUrl,
+    fallbackUrl,
+}: {
+    id: string;
+    instagramUrl?: string;
+    githubUrl: string;
+    fallbackUrl: string;
+}) {
+    const [imgSrc, setImgSrc] = useState(githubUrl);
+    const [isLoading, setIsLoading] = useState(true);
+    const [didUseFallback, setDidUseFallback] = useState(false);
+
+    return (
+        <div className="text-center">
+            <div className="text-sm font-semibold text-black">{id}</div>
+            <div className="relative mt-1.5 h-36 w-36">
+                {isLoading ? (
+                    <Skeleton className="absolute inset-0 h-full w-full rounded-md" />
+                ) : null}
+                <Image
+                    src={imgSrc}
+                    alt={id}
+                    width={144}
+                    height={144}
+                    className={`h-full w-full rounded-md object-contain transition-opacity ${
+                        isLoading ? "opacity-0" : "opacity-100"
+                    }`}
+                    onLoad={() => {
+                        setIsLoading(false);
+                    }}
+                    onError={() => {
+                        if (!didUseFallback) {
+                            setDidUseFallback(true);
+                            setImgSrc(fallbackUrl);
+                            return;
+                        }
+                        setIsLoading(false);
+                    }}
+                />
+            </div>
+
+            {instagramUrl ? (
+                <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1.5 inline-block"
+                    title="View on Instagram"
+                    aria-label={`View ${id} on Instagram`}
+                >
+                    <span
+                        dangerouslySetInnerHTML={{ __html: INSTAGRAM_ICON }}
+                    />
+                </a>
+            ) : null}
+        </div>
+    );
 }
 
 export default function Home() {
@@ -68,19 +133,26 @@ export default function Home() {
         const fallbackId = id.replace(/_\d+$/, "");
         const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
 
-        return new maplibregl.Popup().setLngLat(coords).setHTML(
-            `<div style="text-align:center;">
-          <div style="font-weight:bold; color:#000;">${id}</div>
-          <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
-            onerror="this.onerror=null;this.src='${fallbackUrl}';"
-          />
-          ${
-              instagramUrl
-                  ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#FF0069;' title='View on Instagram'>${INSTAGRAM_ICON}</a>`
-                  : ""
-          }
-        </div>`,
+        const popupNode = document.createElement("div");
+        const popup = new maplibregl.Popup()
+            .setLngLat(coords)
+            .setDOMContent(popupNode);
+        const popupRoot = createRoot(popupNode);
+
+        popupRoot.render(
+            <InvaderPopupContent
+                id={id}
+                instagramUrl={instagramUrl}
+                githubUrl={githubUrl}
+                fallbackUrl={fallbackUrl}
+            />,
         );
+
+        popup.on("close", () => {
+            popupRoot.unmount();
+        });
+
+        return popup;
     };
 
     const openFeatureOnMap = (
