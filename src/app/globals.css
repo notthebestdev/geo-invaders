@@ -127,3 +127,18 @@
         cursor: pointer;
     }
 }
+
+/* Dark mode styles for MapLibre popups */
+.dark .maplibregl-popup-content {
+    background-color: oklch(0.2 0 0);
+    color: oklch(0.95 0 0);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dark .maplibregl-popup-content div {
+    color: oklch(0.95 0 0) !important;
+}
+
+.dark .maplibregl-popup-tip {
+    border-top-color: oklch(0.2 0 0);
+}

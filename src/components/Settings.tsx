@@ -1,5 +1,5 @@
 "use client";
-
+import { useTheme } from "next-themes";
 import { Settings as SettingsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,16 +13,21 @@ import { APP_VERSION, SERVER_MODE } from "@/lib/version";
 interface SettingsProps {
     hideDamaged: boolean;
     hideDestroyed: boolean;
+    isDarkMode: boolean;
     onHideDamagedChange: (value: boolean) => void;
     onHideDestroyedChange: (value: boolean) => void;
+    onDarkModeChange: (value: boolean) => void;
 }
 
 export function Settings({
     hideDamaged,
     hideDestroyed,
+    isDarkMode,
     onHideDamagedChange,
     onHideDestroyedChange,
+    onDarkModeChange,
 }: SettingsProps) {
+    const { theme } = useTheme();
     return (
         <div className="fixed top-4 right-4 z-50">
             <Popover>
@@ -47,6 +52,21 @@ export function Settings({
                     </div>
 
                     <div className="space-y-3">
+                        <div>
+                            <label className="flex items-center justify-between cursor-pointer">
+                                <div className="text-sm">Dark Mode</div>
+                                <Switch
+                                    checked={theme === "dark"}
+                                    onCheckedChange={(v) =>
+                                        onDarkModeChange(Boolean(v))
+                                    }
+                                />
+                            </label>
+                            <div className="text-xs text-muted-foreground mt-1">
+                                Use dark theme for the map and interface.
+                            </div>
+                        </div>
+
                         <div>
                             <label className="flex items-center justify-between cursor-pointer">
                                 <div className="text-sm">

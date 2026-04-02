@@ -11,6 +11,7 @@ import {
     CommandItem,
     CommandList,
 } from "@/components/ui/command";
+import { normalize, numericNormalize } from "@/lib/search-utils";
 
 interface CommandPaletteProps {
     geojsonRef: React.MutableRefObject<
@@ -27,18 +28,6 @@ interface CommandPaletteProps {
     ) => void;
     mapContainer: React.RefObject<HTMLDivElement | null>;
 }
-
-const numericNormalize = (s: string) => s.replace(/_0+(\d+)/g, "_$1");
-
-const normalize = (s?: string) =>
-    (s || "")
-        .trim()
-        .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\u00A0/g, " ")
-        .replace(/[\u200B-\u200F\u2060\uFEFF]/g, "")
-        .replace(/\s+/g, " ")
-        .toLocaleLowerCase();
 
 export function CommandPalette({
     geojsonRef,

@@ -1,0 +1,46 @@
+name: Feature Request
+description: Suggest a new feature or improvement.
+title: "[Feature Request]: "
+labels: ["enhancement"]
+assignees:
+    - notthebestdev
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this feature request!
+    - type: textarea
+      id: feature-description
+      attributes:
+          label: Describe the feature
+          description: Please provide a clear and concise description of the feature you're requesting.
+          placeholder: Describe your feature here...
+          value: "I would like to see..."
+      validations:
+          required: true
+          default: 0
+    - type: textarea
+      id: benefits
+      attributes:
+          label: Benefits
+          description: How would this feature benefit users or improve the project?
+          placeholder: Describe the benefits of this feature...
+          value: "This feature would help because..."
+      validations:
+          required: false
+          default: 0
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of Conduct
+          description: By submitting this issue, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+          options:
+              - label: I agree to follow this project's Code of Conduct
+                required: true
+    - type: upload
+      id: mockups
+      attributes:
+          label: Upload mockups or diagrams
+          description: If applicable, add mockups or diagrams to help explain your feature request.
+      validations:
+          required: false

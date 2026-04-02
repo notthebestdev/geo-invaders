@@ -7,7 +7,7 @@ on:
 jobs:
     dependabot:
         name: Update Dependabot PR
-        if: contains(github.event.pull_request.labels.*.name, 'dependencies')
+        if: ${{ github.actor == 'dependabot[bot]' }}
 
         runs-on: ubuntu-latest
 

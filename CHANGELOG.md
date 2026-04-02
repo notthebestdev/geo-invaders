@@ -1,5 +1,29 @@
 # geo-invaders
 
+## 0.5.1
+
+### Patch Changes
+
+- [`414e94a`](https://github.com/notthebestdev/geo-invaders/commit/414e94af66daa94b899a7a79242ef5534b7b35c1) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat: add issue templates for bug reports and feature requests
+
+- [`29dc7d3`](https://github.com/notthebestdev/geo-invaders/commit/29dc7d352563c0e6e224ffef66e4b18fad9db963) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(ui): add "locate me" button to center map on user location
+
+- [`c6b2734`](https://github.com/notthebestdev/geo-invaders/commit/c6b2734dc9429eeaa7b22a68b6734ae548e01b4f) Thanks [@notthebestdev](https://github.com/notthebestdev)! - chore(workflows): enhance CI and testing setup
+
+- [`6ab1341`](https://github.com/notthebestdev/geo-invaders/commit/6ab1341664a0d30c77a79563167ab07e6b97732f) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(ui): enhance popup with React component and improve image handling
+
+- [`bd69d42`](https://github.com/notthebestdev/geo-invaders/commit/bd69d42bc50c133f316fca2a6b732cd3ce13bece) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(sw): enhance caching strategy and improve offline support
+
+- [`44baae6`](https://github.com/notthebestdev/geo-invaders/commit/44baae6b9fd544050d864324191e9d47e6294f04) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat(ui): add dark mode support with theme toggle
+
+- [`e99e467`](https://github.com/notthebestdev/geo-invaders/commit/e99e467a9e48d8349478dd4fbb0e449243d151c4) Thanks [@notthebestdev](https://github.com/notthebestdev)! - chore: add configuration for issue templates
+
+- [#165](https://github.com/notthebestdev/geo-invaders/pull/165) [`9f32c5a`](https://github.com/notthebestdev/geo-invaders/commit/9f32c5a8124d5cb0e1eb89ae47323f33abc67e2c) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - feat: add Service Worker cache for invader JSON and images
+
+- [`6198510`](https://github.com/notthebestdev/geo-invaders/commit/6198510a4f234fe1ba50217747a4ee4fd6998d12) Thanks [@notthebestdev](https://github.com/notthebestdev)! - feat: add code of conduct and contributing
+
+- [`385364b`](https://github.com/notthebestdev/geo-invaders/commit/385364b665985baa17b6b5ca7443695ad8d2a676) Thanks [@notthebestdev](https://github.com/notthebestdev)! - fix: fix the dependabot workflow for changesets
+
 ## 0.5.0
 
 ### Minor Changes

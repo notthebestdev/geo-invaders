@@ -1,28 +1,141 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
+import { createRoot } from "react-dom/client";
 
 import { CommandPalette } from "@/components/CommandPalette";
 import { Settings } from "@/components/Settings";
+import { Skeleton } from "@/components/ui/skeleton";
 import { siInstagram } from "simple-icons";
+import { LocateFixed } from "lucide-react";
+import Image from "next/image";
+import { getMapStyleUrl, isValidMapView, type MapView } from "@/lib/map-utils";
 
-const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
+const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
+const LAST_VIEW_STORAGE_KEY = "geo-invaders:last-view";
 
 function getInitialView() {
     if (typeof window === "undefined")
         return { lng: 2.3522, lat: 48.8566, zoom: 10 };
+
     const params = new URLSearchParams(window.location.search);
-    const lng = parseFloat(params.get("lng") || "2.3522");
-    const lat = parseFloat(params.get("lat") || "48.8566");
-    const zoom = parseFloat(params.get("zoom") || "10");
-    return { lng, lat, zoom };
+    const lngParam = params.get("lng");
+    const latParam = params.get("lat");
+    const zoomParam = params.get("zoom");
+
+    if (lngParam && latParam && zoomParam) {
+        const fromUrl = {
+            lng: parseFloat(lngParam),
+            lat: parseFloat(latParam),
+            zoom: parseFloat(zoomParam),
+        };
+        if (isValidMapView(fromUrl)) {
+            return fromUrl;
+        }
+    }
+
+    try {
+        const rawSaved = window.localStorage.getItem(LAST_VIEW_STORAGE_KEY);
+        if (rawSaved) {
+            const parsed = JSON.parse(rawSaved) as Partial<MapView>;
+            if (isValidMapView(parsed)) {
+                return parsed;
+            }
+        }
+    } catch {
+        // Ignore storage/JSON failures and continue with defaults.
+    }
+
+    return { lng: 2.3522, lat: 48.8566, zoom: 10 };
+}
+
+function InvaderPopupContent({
+    id,
+    instagramUrl,
+    githubUrl,
+    fallbackUrl,
+}: {
+    id: string;
+    instagramUrl?: string;
+    githubUrl: string;
+    fallbackUrl: string;
+}) {
+    const [imgSrc, setImgSrc] = useState(githubUrl);
+    const [isLoading, setIsLoading] = useState(true);
+    const [didUseFallback, setDidUseFallback] = useState(false);
+
+    return (
+        <div className="text-center">
+            <div className="text-sm font-semibold text-black">{id}</div>
+            <div className="relative mt-1.5 h-36 w-36">
+                {isLoading ? (
+                    <Skeleton className="absolute inset-0 h-full w-full rounded-md" />
+                ) : null}
+                <Image
+                    src={imgSrc}
+                    alt={id}
+                    width={144}
+                    height={144}
+                    className={`h-full w-full rounded-md object-contain transition-opacity ${
+                        isLoading ? "opacity-0" : "opacity-100"
+                    }`}
+                    onLoad={() => {
+                        setIsLoading(false);
+                    }}
+                    onError={() => {
+                        if (!didUseFallback) {
+                            setDidUseFallback(true);
+                            setImgSrc(fallbackUrl);
+                            return;
+                        }
+                        setIsLoading(false);
+                    }}
+                />
+            </div>
+
+            {instagramUrl ? (
+                <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1.5 inline-block"
+                    title="View on Instagram"
+                    aria-label={`View ${id} on Instagram`}
+                >
+                    <span
+                        dangerouslySetInnerHTML={{ __html: INSTAGRAM_ICON }}
+                    />
+                </a>
+            ) : null}
+        </div>
+    );
 }
 
 export default function Home() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const [hideDamaged, setHideDamaged] = useState(false);
     const [hideDestroyed, setHideDestroyed] = useState(false);
+    const [isLocating, setIsLocating] = useState(false);
+    const { theme, setTheme } = useTheme();
+
+    useEffect(() => {
+        if ("serviceWorker" in navigator) {
+            const basePath =
+                process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
+            navigator.serviceWorker
+                .register(`${basePath}/sw.js`)
+                .catch((err) => {
+                    if (process.env.NODE_ENV !== "production") {
+                        console.error(
+                            "Service Worker registration failed:",
+                            err,
+                        );
+                    }
+                });
+        }
+    }, []);
 
     // Store map instance and source for updates
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -42,19 +155,26 @@ export default function Home() {
         const fallbackId = id.replace(/_\d+$/, "");
         const fallbackUrl = `https://www.invader-spotter.art/grosplan/${fallbackId}/${id}-grosplan.png`;
 
-        return new maplibregl.Popup().setLngLat(coords).setHTML(
-            `<div style="text-align:center;">
-          <div style="font-weight:bold; color:#000;">${id}</div>
-          <img src="${githubUrl}" alt="${id}" style="max-width:200px;max-height:200px;margin-top:8px;"
-            onerror="this.onerror=null;this.src='${fallbackUrl}';"
-          />
-          ${
-              instagramUrl
-                  ? `<a href='${instagramUrl}' target='_blank' rel='noopener noreferrer' style='display:inline-block;margin-top:10px;color:#FF0069;' title='View on Instagram'>${INSTAGRAM_ICON}</a>`
-                  : ""
-          }
-        </div>`,
+        const popupNode = document.createElement("div");
+        const popup = new maplibregl.Popup()
+            .setLngLat(coords)
+            .setDOMContent(popupNode);
+        const popupRoot = createRoot(popupNode);
+
+        popupRoot.render(
+            <InvaderPopupContent
+                id={id}
+                instagramUrl={instagramUrl}
+                githubUrl={githubUrl}
+                fallbackUrl={fallbackUrl}
+            />,
         );
+
+        popup.on("close", () => {
+            popupRoot.unmount();
+        });
+
+        return popup;
     };
 
     const openFeatureOnMap = (
@@ -79,13 +199,16 @@ export default function Home() {
     };
 
     useEffect(() => {
-        if (!mapContainer.current) return;
+        if (!mapContainer.current || !theme) return;
 
         const initialView = getInitialView();
 
         const map = new maplibregl.Map({
             container: mapContainer.current,
-            style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}`,
+            style: getMapStyleUrl(
+                theme === "dark",
+                process.env.NEXT_PUBLIC_MAPTILER_KEY!,
+            ),
             center: [initialView.lng, initialView.lat],
             zoom: initialView.zoom,
         });
@@ -95,6 +218,11 @@ export default function Home() {
         map.on("moveend", () => {
             const center = map.getCenter();
             const zoom = map.getZoom();
+            const view: MapView = {
+                lng: center.lng,
+                lat: center.lat,
+                zoom,
+            };
             const params = new URLSearchParams(window.location.search);
             params.set("lng", center.lng.toFixed(5));
             params.set("lat", center.lat.toFixed(5));
@@ -104,6 +232,15 @@ export default function Home() {
                 "",
                 `${window.location.pathname}?${params.toString()}`,
             );
+
+            try {
+                window.localStorage.setItem(
+                    LAST_VIEW_STORAGE_KEY,
+                    JSON.stringify(view),
+                );
+            } catch {
+                // Ignore storage failures in private/incognito contexts.
+            }
         });
 
         fetch(
@@ -294,7 +431,7 @@ export default function Home() {
             map.remove();
             mapRef.current = null;
         };
-    }, [hideDamaged, hideDestroyed]);
+    }, [hideDamaged, hideDestroyed, theme]);
 
     // Update invaders source when toggles change
     useEffect(() => {
@@ -328,14 +465,52 @@ export default function Home() {
         source.setData(filteredGeoJSON);
     }, [hideDamaged, hideDestroyed]);
 
+    // Handle dark mode toggle
+    const handleDarkModeChange = (enabled: boolean) => {
+        setTheme(enabled ? "dark" : "light");
+        const map = mapRef.current;
+        if (map && map.isStyleLoaded()) {
+            map.setStyle(
+                getMapStyleUrl(enabled, process.env.NEXT_PUBLIC_MAPTILER_KEY!),
+            );
+        }
+    };
+
+    const handleLocateMe = () => {
+        if (typeof window === "undefined" || !navigator.geolocation) return;
+
+        setIsLocating(true);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const map = mapRef.current;
+                if (!map) {
+                    setIsLocating(false);
+                    return;
+                }
+
+                map.flyTo({
+                    center: [
+                        position.coords.longitude,
+                        position.coords.latitude,
+                    ],
+                    zoom: Math.max(map.getZoom(), 15),
+                    essential: true,
+                });
+                setIsLocating(false);
+            },
+            () => {
+                setIsLocating(false);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            },
+        );
+    };
+
     return (
         <>
-            <head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-                />
-            </head>
             <div
                 style={{
                     position: "fixed",
@@ -359,9 +534,41 @@ export default function Home() {
             <Settings
                 hideDamaged={hideDamaged}
                 hideDestroyed={hideDestroyed}
+                isDarkMode={theme === "dark"}
                 onHideDamagedChange={setHideDamaged}
                 onHideDestroyedChange={setHideDestroyed}
+                onDarkModeChange={handleDarkModeChange}
             />
+
+            <button
+                id="locate"
+                type="button"
+                onClick={handleLocateMe}
+                disabled={isLocating}
+                aria-label="Center map on my location"
+                title="Center map on my location"
+                style={{
+                    position: "fixed",
+                    right: 16,
+                    bottom: 72,
+                    zIndex: 30,
+                    border: "1px solid rgba(255, 255, 255, 0.45)",
+                    background: "rgba(255, 255, 255, 0.88)",
+                    color: "#0f172a",
+                    borderRadius: "50%",
+                    width: 44,
+                    height: 44,
+                    display: "grid",
+                    placeItems: "center",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.16)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    cursor: isLocating ? "wait" : "pointer",
+                    opacity: isLocating ? 0.8 : 1,
+                }}
+            >
+                <LocateFixed size={18} />
+            </button>
 
             <CommandPalette
                 geojsonRef={geojsonRef}

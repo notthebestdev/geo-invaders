@@ -5,6 +5,9 @@ const isGitHubPagesBuild = process.env.NODE_ENV === "production";
 
 const nextConfig = {
     output: "export",
+    images: {
+        unoptimized: true,
+    },
     basePath: isGitHubPagesBuild ? "/geo-invaders" : "",
 };
 

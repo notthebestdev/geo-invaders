@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import type { Viewport } from "next";
 
@@ -16,8 +17,18 @@ const geistMono = Geist_Mono({
 const basePath = process.env.NODE_ENV === "production" ? "/geo-invaders" : "";
 
 export const metadata: Metadata = {
+    applicationName: "Geo Invaders",
     title: "Geo Invaders",
     description: "An interactive map for the game Flash Invaders",
+    manifest: `${basePath}/manifest.webmanifest`,
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: "default",
+        title: "Geo Invaders",
+    },
+    formatDetection: {
+        telephone: false,
+    },
     keywords: [
         "Geo Invaders",
         "Flash Invaders",
@@ -68,6 +79,7 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
+    themeColor: "#0b1220",
 };
 
 export default function RootLayout({
@@ -76,12 +88,18 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 suppressHydrationWarning
             >
-                {children}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                >
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
