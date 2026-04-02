@@ -1,25 +1,25 @@
 name: Add changeset to Dependabot updates
 
 on:
-  pull_request_target:
-    types: [opened, synchronize, labeled]
+    pull_request_target:
+        types: [opened, synchronize, labeled]
 
 jobs:
-  dependabot:
-    name: Update Dependabot PR
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    dependabot:
+        name: Update Dependabot PR
+        if: ${{ github.actor == 'dependabot[bot]' }}
 
-    runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
+        permissions:
+            contents: write
 
-    steps:
-      - name: Update PR
-        uses: mscharley/dependency-changesets-action@v1.2.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          use-conventional-commits: true
-          commit-message: "chore(deps): changeset for dependency update"
-          author-name: github-actions[bot]
-          author-email: github-actions[bot]@users.noreply.github.com
+        steps:
+            - name: Update PR
+              uses: mscharley/dependency-changesets-action@v1.2.3
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  use-conventional-commits: true
+                  commit-message: "chore(deps): changeset for dependency update"
+                  author-name: github-actions[bot]
+                  author-email: github-actions[bot]@users.noreply.github.com

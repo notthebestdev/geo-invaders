@@ -30,7 +30,7 @@ Built with Next.js and MapTiler, this app helps you discover, locate, and naviga
 
 ### Prerequisites
 
-- Node.js 20 or higher
+- Node.js 20 or 22 LTS (recommended)
 - npm, yarn, pnpm, or bun
 
 ### Installation
@@ -135,6 +135,20 @@ npm run dev
 ```
 
 ## 📦 Build & Deploy
+
+### Tests
+
+Run unit tests once:
+
+```bash
+npm run test
+```
+
+Run tests in watch mode while developing:
+
+```bash
+npm run test:watch
+```
 
 ### Production Build (for GitHub Pages)
 

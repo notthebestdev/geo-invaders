@@ -11,28 +11,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { siInstagram } from "simple-icons";
 import { LocateFixed } from "lucide-react";
 import Image from "next/image";
+import { getMapStyleUrl, isValidMapView, type MapView } from "@/lib/map-utils";
 
 const INSTAGRAM_ICON = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#FF0069"><path d="${siInstagram.path}"/></svg>`;
 const LAST_VIEW_STORAGE_KEY = "geo-invaders:last-view";
-
-type MapView = { lng: number; lat: number; zoom: number };
-
-function isValidMapView(view: Partial<MapView>): view is MapView {
-    const { lng, lat, zoom } = view;
-
-    return (
-        typeof lng === "number" &&
-        typeof lat === "number" &&
-        typeof zoom === "number" &&
-        Number.isFinite(lng) &&
-        Number.isFinite(lat) &&
-        Number.isFinite(zoom) &&
-        Math.abs(lng) <= 180 &&
-        Math.abs(lat) <= 90 &&
-        zoom >= 0 &&
-        zoom <= 22
-    );
-}
 
 function getInitialView() {
     if (typeof window === "undefined")
@@ -67,11 +49,6 @@ function getInitialView() {
     }
 
     return { lng: 2.3522, lat: 48.8566, zoom: 10 };
-}
-
-function getMapStyleUrl(isDark: boolean, apiKey: string): string {
-    const style = isDark ? "streets-v4-dark" : "streets-v4";
-    return `https://api.maptiler.com/maps/${style}/style.json?key=${apiKey}`;
 }
 
 function InvaderPopupContent({
