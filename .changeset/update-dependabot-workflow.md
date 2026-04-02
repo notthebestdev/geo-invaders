@@ -1,0 +1,1 @@
+fix: fix the dependabot workflow for changesets
