@@ -52,7 +52,7 @@
         "@types/react-dom": "^19",
         "@typescript-eslint/eslint-plugin": "^8.47.0",
         "baseline-browser-mapping": "^2.10.17",
-        "eslint": "^10.2.0",
+        "eslint": "^10.2.1",
         "eslint-config-next": "^16.2.4",
         "eslint-plugin-react": "^7.37.5",
         "husky": "^9.1.7",
