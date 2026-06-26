@@ -171,7 +171,8 @@ npm run start
 
 The `build:local` script creates a build without the GitHub Pages base path, making it suitable for local testing at `http://localhost:3000`.
 
-**Note:** Don't use `npm run build` followed by `npm run start` for local testing, as the production build includes the `/geo-invaders` base path and won't work correctly on localhost.
+> [!NOTE]
+> Don't use `npm run build` followed by `npm run start` for local testing, as the production build includes the `/geo-invaders` base path and won't work correctly on localhost.
 
 ### Deployment
 
