@@ -16,8 +16,8 @@ describe("isValidMapView", () => {
 
     it("returns false when values are missing or non-numeric", () => {
         expect(isValidMapView({})).toBe(false);
-        expect(
-            isValidMapView({ lng: Number.NaN, lat: 48.85, zoom: 10 }),
-        ).toBe(false);
+        expect(isValidMapView({ lng: Number.NaN, lat: 48.85, zoom: 10 })).toBe(
+            false,
+        );
     });
 });
