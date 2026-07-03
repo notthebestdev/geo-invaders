@@ -1,5 +1,11 @@
 # geo-invaders
 
+## 0.5.2
+
+### Patch Changes
+
+- [`b3c546d`](https://github.com/notthebestdev/geo-invaders/commit/b3c546dfc6bd61e955e70c0abf8f15100ef06d2f) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs: readme tweaks
+
 ## 0.5.1
 
 ### Patch Changes
