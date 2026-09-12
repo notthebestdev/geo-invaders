@@ -1,5 +1,17 @@
 # geo-invaders
 
+## 0.5.2
+
+### Patch Changes
+
+- [#376](https://github.com/notthebestdev/geo-invaders/pull/376) [`d8749a1`](https://github.com/notthebestdev/geo-invaders/commit/d8749a1e7b89d2146f9cfcc134d43cb0c4bf4789) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - fix: make the settings version link open the matching GitHub release
+
+- [`b3c546d`](https://github.com/notthebestdev/geo-invaders/commit/b3c546dfc6bd61e955e70c0abf8f15100ef06d2f) Thanks [@notthebestdev](https://github.com/notthebestdev)! - docs: readme tweaks
+
+- [`f2b342a`](https://github.com/notthebestdev/geo-invaders/commit/f2b342a73894fc1a19d07249e7d2754049d5f4c9) Thanks [@notthebestdev](https://github.com/notthebestdev)! - fix: restore versioning for the private package in Changesets
+
+- [`1fc0ec7`](https://github.com/notthebestdev/geo-invaders/commit/1fc0ec7e9a57135e4a836fd8ac1e472630695fed) Thanks [@notthebestdev](https://github.com/notthebestdev)! - fix: downgrade typescript to ^5.9.2 to resolve peer conflict with @typescript-eslint/eslint-plugin and downgrade eslint to ^9.39.5 to restore compatibility with eslint-config-next
+
 ## 0.5.1
 
 ### Patch Changes

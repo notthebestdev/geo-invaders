@@ -10,5 +10,9 @@
     "access": "restricted",
     "baseBranch": "dev",
     "updateInternalDependencies": "patch",
+    "privatePackages": {
+        "version": true,
+        "tag": false
+    },
     "ignore": []
 }
