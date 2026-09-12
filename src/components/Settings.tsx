@@ -28,6 +28,8 @@ export function Settings({
     onDarkModeChange,
 }: SettingsProps) {
     const { theme } = useTheme();
+    const releaseUrl = `https://github.com/notthebestdev/geo-invaders/releases/tag/v${APP_VERSION}`;
+
     return (
         <div className="fixed top-4 right-4 z-50">
             <Popover>
@@ -108,7 +110,15 @@ export function Settings({
 
                     <div className="mt-4 pt-3 border-t border-border">
                         <div className="text-xs text-muted-foreground text-center">
-                            v{APP_VERSION} •{" "}
+                            <a
+                                href={releaseUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline-offset-2 hover:underline"
+                            >
+                                v{APP_VERSION}
+                            </a>{" "}
+                            •{" "}
                             {SERVER_MODE === "development"
                                 ? "Development"
                                 : "Production"}
