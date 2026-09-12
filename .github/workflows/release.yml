@@ -37,9 +37,9 @@ jobs:
               id: changesets
               uses: changesets/action@v2.1.2
               with:
-                  commit: "ci(repo): version packages"
-                  title: "ci(repo): version packages"
-                  version: "npx changeset version"
-                  publish: "npx tsx .github/scripts/create-release.ts"
+                  commit-message: "ci(repo): version packages"
+                  pr-title: "ci(repo): version packages"
+                  version-script: "npx changeset version"
+                  publish-script: "npx tsx .github/scripts/create-release.ts"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
