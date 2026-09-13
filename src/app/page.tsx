@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import "maplibre-gl/dist/maplibre-gl.css";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import { createRoot } from "react-dom/client";
 
 import { CommandPalette } from "@/components/CommandPalette";
